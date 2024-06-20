@@ -1,11 +1,11 @@
 user_id,name,address,spouse_id,dob,city_id,company_id,job_id,income
-1,Dominique Parsons,"9934 Jeffrey Falls Apt. 485 East Amanda, PA 23914",2,1965-12-02,5,1,1,43439.35
-2,Joshua Meza,"Unit 4703 Box 2035 DPO AE 09403",1,1995-11-22,4,1,4,47010.77
-3,Kristin Peterson,"352 Charles Hill Randallton, MT 23317",4,1985-06-24,4,,,
-4,Albert Keith,"86015 Yu Flat Apt. 592 Richardview, IN 35058",3,1973-09-09,2,1,2,96319.05
-5,Edwin Lane,"9896 Connor Isle New Gabrielmouth, MO 70232",,1998-01-10,5,4,1,74953.91
-6,Matthew Schmidt,"56463 Chavez Burgs Apt. 791 West Brenda, MT 54850",7,1986-06-20,2,3,5,120275.21
-7,Nicole Jacobs,"777 Robert Crest West Sharonport, FL 77499",6,1993-06-16,1,5,3,53121.11
-8,Danielle Wheeler,"142 Joseph Knolls Apt. 380 Sanchezberg, KS 47010",9,1999-09-19,2,3,5,87402.08
-9,Tracey Jones,"263 Freeman Parks Parkertown, UT 88067",8,1958-12-16,5,4,3,34577.86
-10,Jeremiah Garza,"9089 Levine Crescent Suite 625 Dustinfurt, MO 29964",,1986-02-11,2,3,5,144821.03
+1,Dominique Parsons,"9934 Jeffrey Falls Apt. 485 East Amanda, PA 23914",NULL,1965-12-02,5,1,1,43439.35
+2,Joshua Meza,"Unit 4703 Box 2035 DPO AE 09403",NULL,1995-11-22,4,1,4,47010.77
+3,Kristin Peterson,"352 Charles Hill Randallton, MT 23317",NULL,1985-06-24,4,NULL,NULL,0
+4,Albert Keith,"86015 Yu Flat Apt. 592 Richardview, IN 35058",NULL,1973-09-09,2,1,2,96319.05
+5,Edwin Lane,"9896 Connor Isle New Gabrielmouth, MO 70232",NULL,1998-01-10,5,4,1,74953.91
+6,Matthew Schmidt,"56463 Chavez Burgs Apt. 791 West Brenda, MT 54850",NULL,1986-06-20,2,3,5,120275.21
+7,Nicole Jacobs,"777 Robert Crest West Sharonport, FL 77499",NULL,1993-06-16,1,5,3,53121.11
+8,Danielle Wheeler,"142 Joseph Knolls Apt. 380 Sanchezberg, KS 47010",NULL,1999-09-19,2,3,5,87402.08
+9,Tracey Jones,"263 Freeman Parks Parkertown, UT 88067",NULL,1958-12-16,5,4,3,34577.86
+10,Jeremiah Garza,"9089 Levine Crescent Suite 625 Dustinfurt, MO 29964",NULL,1986-02-11,2,3,5,144821.03

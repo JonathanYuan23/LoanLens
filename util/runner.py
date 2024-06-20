@@ -14,7 +14,7 @@ INSERT_PATHS = [
     ('../test/data/jobs.csv', 'Job'),
     ('../test/data/companies.csv', 'Company'),
     ('../test/data/users.csv', 'Users'),
-    ('../test/data/dependants.csv', 'Dependant')
+    ('../test/data/dependants.csv', 'Dependant'),
     ('../test/data/asset_to_owner.csv', 'AssetToOwner'),
     ('../test/data/loans.csv', 'Loans')
 ]
@@ -29,6 +29,7 @@ MYSQL_DB = os.getenv('MYSQL_DB')
 def connect():
     return mysql.connector.connect(
         host=MYSQL_HOST,
+        port=3306,
         user=MYSQL_USER,
         password=MYSQL_PASSWORD,
         database=MYSQL_DB
