@@ -1,5 +1,6 @@
 import os
 import argparse
+import csv
 
 from dotenv import load_dotenv
 import mysql.connector
@@ -7,6 +8,16 @@ from mysql.connector import Error
 
 SET_UP = 'set_up'
 INSERT = 'insert'
+INSERT_PATHS = [
+    ('../test/data/assets.csv', 'Assets'),
+    ('../test/data/cities.csv', 'City'),
+    ('../test/data/jobs.csv', 'Job'),
+    ('../test/data/companies.csv', 'Company'),
+    ('../test/data/users.csv', 'Users'),
+    ('../test/data/dependants.csv', 'Dependant')
+    ('../test/data/asset_to_owner.csv', 'AssetToOwner'),
+    ('../test/data/loans', 'Loans')
+]
 
 load_dotenv()
 
@@ -40,11 +51,17 @@ def execute_sql_file(filename, connection):
     cursor.close()
     sql_file.close()
 
-def set_up(connection):
-    execute_sql_file('set_up.sql', connection)
-
 def insert(connection):
-    execute_sql_file('insert.sql', connection)
+    cursor = connection.cursor()
+    for csv_path, table in INSERT_PATHS:
+        with open(csv_path, mode='r') as csvfile:
+            reader = csv.reader(csvfile)
+            next(reader)  # Skip the header row
+            for row in reader:
+                cursor.execute("INSERT INTO %s (column1, column2) VALUES (%s, %s)", table, row)
+
+    connection.commit()
+    cursor.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process choices')
@@ -53,8 +70,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     connection = connect()
-    if args.command == SET_UP:
-        set_up(connection)
-    elif args.command == INSERT:
+    # if args.command == SET_UP:
+    #     set_up(connection)
+    if args.command == INSERT:
         insert(connection)
     connection.close()
