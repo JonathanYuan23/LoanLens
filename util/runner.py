@@ -16,7 +16,7 @@ INSERT_PATHS = [
     ('../test/data/users.csv', 'Users'),
     ('../test/data/dependants.csv', 'Dependant')
     ('../test/data/asset_to_owner.csv', 'AssetToOwner'),
-    ('../test/data/loans', 'Loans')
+    ('../test/data/loans.csv', 'Loans')
 ]
 
 load_dotenv()
@@ -58,7 +58,9 @@ def insert(connection):
             reader = csv.reader(csvfile)
             next(reader)  # Skip the header row
             for row in reader:
-                cursor.execute("INSERT INTO %s (column1, column2) VALUES (%s, %s)", table, row)
+                placeholders = ', '.join(['%s'] * len(row))
+                query = f"INSERT INTO {table} VALUES ({placeholders})"
+                cursor.execute(query, row)
 
     connection.commit()
     cursor.close()
