@@ -8,20 +8,23 @@ from mysql.connector import Error
 
 SET_UP = 'set_up'
 INSERT = 'insert'
+
+SET_UP_PATH = '../sql/create_table.sql'
 INSERT_PATHS = [
-    ('../test/data/assets.csv', 'Assets'),
-    ('../test/data/cities.csv', 'City'),
-    ('../test/data/jobs.csv', 'Job'),
-    ('../test/data/companies.csv', 'Company'),
-    ('../test/data/users.csv', 'Users'),
-    ('../test/data/dependants.csv', 'Dependant'),
-    ('../test/data/asset_to_owner.csv', 'AssetToOwner'),
-    ('../test/data/loans.csv', 'Loans')
+    ('../test/sample_db/assets.csv', 'Assets'),
+    ('../test/sample_db/cities.csv', 'City'),
+    ('../test/sample_db/jobs.csv', 'Job'),
+    ('../test/sample_db/companies.csv', 'Company'),
+    ('../test/sample_db/users.csv', 'Users'),
+    ('../test/sample_db/dependants.csv', 'Dependant'),
+    ('../test/sample_db/asset_to_owner.csv', 'AssetToOwner'),
+    ('../test/sample_db/loans.csv', 'Loans')
 ]
 
 load_dotenv()
 
 MYSQL_HOST = os.getenv('MYSQL_HOST')
+MYSQL_PORT = os.getenv('MYSQL_PORT')
 MYSQL_USER = os.getenv('MYSQL_USER')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
 MYSQL_DB = os.getenv('MYSQL_DB')
@@ -29,7 +32,7 @@ MYSQL_DB = os.getenv('MYSQL_DB')
 def connect():
     return mysql.connector.connect(
         host=MYSQL_HOST,
-        port=3306,
+        port=MYSQL_PORT,
         user=MYSQL_USER,
         password=MYSQL_PASSWORD,
         database=MYSQL_DB
@@ -52,6 +55,9 @@ def execute_sql_file(filename, connection):
     cursor.close()
     sql_file.close()
 
+def setup(connection):
+    execute_sql_file(SET_UP_PATH, connection)
+
 def insert(connection):
     cursor = connection.cursor()
     for csv_path, table in INSERT_PATHS:
@@ -73,8 +79,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     connection = connect()
-    # if args.command == SET_UP:
-    #     set_up(connection)
-    if args.command == INSERT:
+    if args.command == SET_UP:
+        setup(connection)
+    elif args.command == INSERT:
         insert(connection)
+
     connection.close()
