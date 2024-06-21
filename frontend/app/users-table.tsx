@@ -12,7 +12,7 @@ import { Button } from '../components/ui/button';
 import { deleteUser } from './actions';
 import { useRouter } from 'next/navigation';
 
-export function UsersTable() {
+export function UsersTable(data: any) {
   const router = useRouter();
 
   return (
@@ -22,12 +22,13 @@ export function UsersTable() {
           <TableHeader>
             <TableRow>
               <TableHead className="max-w-[150px]">Name</TableHead>
-              <TableHead className="hidden md:table-cell">Email</TableHead>
-              <TableHead className="hidden md:table-cell">Username</TableHead>
+              <TableHead className="hidden md:table-cell">
+                Total Assets
+              </TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>fill in</TableBody>
+          <TableBody>data</TableBody>
         </Table>
       </form>
       (
