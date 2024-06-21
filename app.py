@@ -4,14 +4,14 @@ from dotenv import load_dotenv
 
 from flask import Flask
 import mysql.connector
-# from flask_mysqldb import MySQL
 
 load_dotenv()
 
 MYSQL_HOST = os.getenv('MYSQL_HOST')
+MYSQL_PORT = os.getenv('MYSQL_PORT')
 MYSQL_USER = os.getenv('MYSQL_USER')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
-MYSQL_DB = 'cs348'
+MYSQL_DB = 'LoanLens'
 
 # Set up paths
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -19,16 +19,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # Initialize and configure app
 app = Flask(__name__)
 
-# app.config['MYSQL_HOST'] = MYSQL_HOST
-# app.config['MYSQL_USER'] = MYSQL_USER
-# app.config['MYSQL_PASSWORD'] = MYSQL_PASSWORD
-# app.config['MYSQL_DB'] = MYSQL_DB
-
-# mysql = MySQL(app)
 
 def get_db():
     mydb = mysql.connector.connect(
         host=MYSQL_HOST,
+        port=MYSQL_PORT,
         user=MYSQL_USER,
         password=MYSQL_PASSWORD,
         database=MYSQL_DB
@@ -36,7 +31,7 @@ def get_db():
 
     mycursor = mydb.cursor()
 
-    mycursor.execute("SELECT * FROM Persons")
+    mycursor.execute("SELECT * FROM Users")
 
     myresult = mycursor.fetchall()
 
