@@ -1,6 +1,10 @@
-SELECT u.name, SUM(a.worth) AS total_assets
-FROM Users u
-LEFT JOIN AssetToOwner ao ON u.user_id = ao.user_id
-LEFT JOIN Assets a ON ao.asset_id = a.asset_id
-WHERE u.user_id = <user_id>
-GROUP BY u.user_id;
+SELECT 
+    Assets.asset_id,
+    Assets.asset_type,
+    Assets.worth
+FROM 
+    Assets
+JOIN 
+    AssetToOwner ON Assets.asset_id = AssetToOwner.asset_id
+WHERE 
+    AssetToOwner.user_id = <user_id>;
