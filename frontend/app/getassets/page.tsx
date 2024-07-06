@@ -9,34 +9,20 @@ import { useState } from 'react';
 import { Search } from 'app/search';
 import { UsersTable } from 'app/users-table';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 
 const fetchUserData = async (user_id: string) => {
   const { data } = await axios.get(
     `http://localhost:5000/userAssets/${user_id}`
   );
-  console.log(data);
   return data;
 };
 export default function getAssetsPage() {
   const queryClient = new QueryClient();
   const [userId, setUserId] = useState('');
-  const [queryEnabled, setQueryEnabled] = useState(false);
-  const [data, setData] = useState();
-
-  // const { data, refetch } = useQuery({
-  //   queryKey: ['todos'],
-  //   queryFn: () => fetchUserData(userId),
-  //   enabled: false
-  //   // on: () => setQueryEnabled(false) // Reset queryEnabled after query is done
-  // });
-
-  const handleFetchData = async () => {
-    console.log('handleFetchData');
-    const data = await fetchUserData(userId);
-    console.log(data);
-    setData(data);
-  };
+  const { data, error, isLoading, isError } = useQuery({
+    queryKey: ['todos'],
+    queryFn: () => fetchUserData(userId)
+  });
   return (
     <QueryClientProvider client={queryClient}>
       <main className="flex flex-1 flex-col p-4 md:p-6">
@@ -51,10 +37,7 @@ export default function getAssetsPage() {
             onChange={(e) => setUserId(e.target.value)}
           />
         </div>
-        <div className="w-full mb-4">
-          <Button onClick={() => handleFetchData()}>Fetch Data</Button>
-        </div>
-        {/* <UsersTable users={data} /> */}
+        <UsersTable users={data} />
       </main>
     </QueryClientProvider>
   );
