@@ -26,6 +26,14 @@ const menuItems: menuItemsInterface[] = [
         title: "Assets",
         path: "/home/assets",
       },
+      {
+        title: "Loans",
+        path: "/home/loans",
+      },
+      {
+        title: "Income",
+        path: "/home/income",
+      },
     ],
   },
 ];
