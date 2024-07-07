@@ -52,7 +52,7 @@ function Loans() {
           color="primary"
           // onClick={handleFetchAssets}
         >
-          Fetch Loans
+          Fetch Income
         </Button>
       </div>
 
