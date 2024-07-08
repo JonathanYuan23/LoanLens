@@ -13,11 +13,22 @@ Our handmade sample data is in `test/sample_db`. There is a helper script `util/
 4. Retrieves household income
 
 ## Production Database
-To bulk insert data from a local csv file remotely, you'll need to add this to your `sqld.cnf` config file on the MySQL server:
+To bulk insert data from a local csv file remotely, you'll need to add this to your `sqld.cnf` config file on the MySQL server (usually found at `/etc/mysql/mysql.conf.d/mysqld.cnf`):
 ```bash
 [mysqld]
 secure_file_priv=''
 local_infile=1
+```
+
+then restart MySQL
+```
+sudo service mysql restart
+```
+
+which is equivalent to
+```
+sudo service mysql stop
+sudo service mysql start
 ```
 
 This lets you use MySQL's `LOAD DATA INFILE` syntax with local file paths:
