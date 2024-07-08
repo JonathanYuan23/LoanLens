@@ -8,6 +8,7 @@ from mysql.connector import Error
 
 SET_UP = 'set_up'
 INSERT = 'insert'
+BULK_INSERT = 'bulk_insert'
 
 SET_UP_PATH = '../sql/create_table.sql'
 INSERT_PATHS = [
@@ -20,6 +21,7 @@ INSERT_PATHS = [
     ('../test/sample_db/asset_to_owner.csv', 'AssetToOwner'),
     ('../test/sample_db/loans.csv', 'Loans')
 ]
+BULK_INSERT_PATH = './load_data.sql'
 
 load_dotenv()
 
@@ -35,7 +37,8 @@ def connect():
         port=MYSQL_PORT,
         user=MYSQL_USER,
         password=MYSQL_PASSWORD,
-        database=MYSQL_DB
+        database=MYSQL_DB,
+        allow_local_infile=True
     )
 
 def execute_sql_file(filename, connection):
@@ -58,6 +61,9 @@ def execute_sql_file(filename, connection):
 def setup(connection):
     execute_sql_file(SET_UP_PATH, connection)
 
+def bulk_insert(connection):
+    execute_sql_file(BULK_INSERT_PATH, connection)
+
 def insert(connection):
     cursor = connection.cursor()
     for csv_path, table in INSERT_PATHS:
@@ -74,7 +80,7 @@ def insert(connection):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process choices')
-    parser.add_argument('command', choices=[SET_UP, INSERT], help='Command to run')
+    parser.add_argument('command', choices=[SET_UP, INSERT, BULK_INSERT], help='Command to run')
 
     args = parser.parse_args()
 
@@ -83,5 +89,7 @@ if __name__ == "__main__":
         setup(connection)
     elif args.command == INSERT:
         insert(connection)
+    elif args.command == BULK_INSERT:
+        bulk_insert(connection)
 
     connection.close()

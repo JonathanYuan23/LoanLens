@@ -28,13 +28,11 @@ CREATE TABLE Users (
     user_id INTEGER PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
-    spouse_id INTEGER,
     dob TIMESTAMP NOT NULL,
     city_id INTEGER NOT NULL,
     company_id INTEGER NOT NULL,
     job_id INTEGER NOT NULL,
     income DECIMAL(10, 2) NOT NULL CHECK (income >= 0),
-    FOREIGN KEY (spouse_id) REFERENCES Users(user_id),
     FOREIGN KEY (city_id) REFERENCES City(city_id),
     FOREIGN KEY (company_id) REFERENCES Company(company_id),
     FOREIGN KEY (job_id) REFERENCES Job(job_id)
