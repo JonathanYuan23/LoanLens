@@ -1,9 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from db import db
+from sqlalchemy.sql import text
 
 def get_all_assets(user_id):
-    sql_query = """
+    sql_query = text("""
         SELECT 
             Assets.asset_type,
             Assets.worth
@@ -13,13 +12,13 @@ def get_all_assets(user_id):
             AssetToOwner ON Assets.asset_id = AssetToOwner.asset_id
         WHERE 
             AssetToOwner.user_id = :user_id;
-    """
-    result = db.engine.execute(sql_query, user_id=user_id)
-    assets = [{'asset_type': row['asset_type'], 'asset_value': row['worth']} for row in result]
+    """)
+    result = db.session.execute(sql_query, {'user_id': int(user_id)})
+    assets = [{'asset_type': row[0], 'asset_value': row[1]} for row in result]
     return {'user_id': user_id, 'assets': assets}
 
 def get_loan_history(user_id):
-    sql_query = """
+    sql_query = text("""
         SELECT 
             reason,
             loan_amount,
@@ -29,13 +28,13 @@ def get_loan_history(user_id):
             Loans
         WHERE 
             user_id = :user_id;
-    """
-    result = db.engine.execute(sql_query, user_id=user_id)
-    loans = [{'reason': row['reason'], 'loan_amount': row['loan_amount'], 'balance_paid': row['balance_paid'], 'date_created': row['date_created']} for row in result]
+    """)
+    result = db.session.execute(sql_query, {'user_id': int(user_id)})
+    loans = [{'reason': row[0], 'loan_amount': row[1], 'balance_paid': row[2], 'date_created': row[3]} for row in result]
     return {'user_id': user_id, 'loans': loans}
 
 def get_household_income(user_id):
-    sql_query = """
+    sql_query = text("""
         SELECT SUM(u.income) AS household_income
         FROM Users u
         WHERE u.user_id IN (
@@ -52,7 +51,7 @@ def get_household_income(user_id):
                 SELECT :user_id AS household_member 
             ) AS household_members
         );
-    """
-    result = db.engine.execute(sql_query, user_id=user_id)
+    """)
+    result = db.session.execute(sql_query, {'user_id': int(user_id)})
     household_income = result.scalar()
     return {'user_id': user_id, 'household_income': household_income}

@@ -16,4 +16,4 @@ def loan_history(user_id):
 @api_bp.route('/household-income/<int:user_id>', methods=['GET'])
 def household_income(user_id):
     income = get_household_income(user_id)
-    return jsonify({'household_income': income})
+    return jsonify(income)
