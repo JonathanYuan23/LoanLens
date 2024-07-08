@@ -32,7 +32,7 @@ sudo service mysql start
 ```
 
 This lets you use MySQL's `LOAD DATA INFILE` syntax with local file paths:
-```sql
+``` sql
 LOAD DATA LOCAL INFILE './prod_data/cities.csv' INTO TABLE City
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 LINES TERMINATED BY '\n'

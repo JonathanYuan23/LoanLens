@@ -63,3 +63,11 @@ CREATE TABLE Dependant (
     FOREIGN KEY (provider_id) REFERENCES Users(user_id),
     FOREIGN KEY (dependant_id) REFERENCES Users(user_id)
 );
+
+CREATE TABLE Married (
+    spouse_id_1 INTEGER NOT NULL,
+    spouse_id_2 INTEGER NOT NULL,
+    PRIMARY KEY (spouse_id_1, spouse_id_2),
+    FOREIGN KEY (spouse_id_1) REFERENCES Users(user_id),
+    FOREIGN KEY (spouse_id_2) REFERENCES Users(user_id)
+);

@@ -114,6 +114,9 @@ def generate_users(df, city_df, company_df, job_df):
         if getattr(user, 'Car_Ownership') == 'yes':
             user_assets.append((user_id, 'car'))
 
+        if getattr(user, '_4') == 'married':
+            user_spouses.append(user_id)
+
         if getattr(user, 'Risk_Flag') == 0:
             if random.random() <= 0.3:
                 user_loans.append(user_id)
@@ -121,7 +124,7 @@ def generate_users(df, city_df, company_df, job_df):
     user_df = pd.DataFrame(user_data, columns=['user_id', 'name', 'address', 'dob', 'city_id', 'company_id', 'job_id', 'income'])
     user_df.to_csv('prod_data/users.csv', index=False)
 
-    return user_df, user_assets, user_loans
+    return user_df, user_assets, user_loans, user_spouses
 
 
 def generate_assets(user_assets):
@@ -170,14 +173,32 @@ def generate_dependants(df):
     dependant_data = []
     i = 1
     while i <= len(df):
-        j = min(i + random.randint(1, 200), len(df))
-        dependant_data.append([i, j])
+        j = min(i + random.randint(1, 5), len(df))
+        if i == j:
+            break
+        for k in range(i + 1, j + 1):
+            dependant_data.append([i, k])
         i = j + 1
 
     dependant_df = pd.DataFrame(dependant_data, columns=['provider_id', 'dependant_id'])
     dependant_df.to_csv('prod_data/dependants.csv', index=False)
 
     return dependant_df
+
+def generate_spouses(user_spouses):
+    spouse_data = []
+    i = 0
+    while i < len(user_spouses):
+        j = min(i + random.randint(1, 10), len(user_spouses) - 1)
+        if i == j:
+            break
+        spouse_data.append([i, j])
+        i = j + 1
+
+    spouse_df = pd.DataFrame(spouse_data, columns=['spouse_id_1', 'spouse_id_2'])
+    spouse_df.to_csv('prod_data/married.csv', index=False)
+
+    return spouse_df
 
 if __name__ == "__main__":
     loan_reasons = get_loan_reasons()
@@ -188,9 +209,11 @@ if __name__ == "__main__":
     city_df = generate_cities()
     company_df = generate_companies()
 
-    user_df, user_assets, user_loans = generate_users(df, city_df, company_df, job_df)
+    user_df, user_assets, user_loans, user_spouses = generate_users(df, city_df, company_df, job_df)
 
     asset_df, asset_to_owner_df = generate_assets(user_assets)
     loan_df = generate_loans(user_loans, loan_reasons)
 
     dependant_df = generate_dependants(df)
+
+    spouse_df = generate_spouses(user_spouses)
