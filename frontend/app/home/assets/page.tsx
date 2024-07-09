@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TextField,
@@ -42,10 +42,13 @@ function Assets() {
     refetch();
   };
 
-  const { isError, data, error, refetch, isFetching } = useQuery<
-    Asset[],
-    AxiosAPIError
-  >({
+  const {
+    isError,
+    data: assets,
+    error,
+    refetch,
+    isLoading,
+  } = useQuery<Asset[], AxiosAPIError>({
     queryKey: ["userAssets", userId],
     queryFn: () => getAssets(parseInt(userId)),
     enabled: false,
@@ -74,18 +77,25 @@ function Assets() {
               <TableCell>Asset Value</TableCell>
             </TableRow>
           </TableHead>
-          {isFetching && <TableRow>Loading...</TableRow>}
-          {isError && <TableRow>{error.message}</TableRow>}
-          {data && (
-            <TableBody>
-              {data.map((asset, index) => (
+          <TableBody>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={2}>Loading...</TableCell>
+              </TableRow>
+            )}
+            {isError && (
+              <TableRow>
+                <TableCell colSpan={2}>{error.message}</TableCell>
+              </TableRow>
+            )}
+            {assets &&
+              assets?.map((asset, index) => (
                 <TableRow key={index}>
                   <TableCell>{asset.asset_type}</TableCell>
                   <TableCell>{asset.asset_value}</TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          )}
+          </TableBody>
         </Table>
       </TableContainer>
     </div>

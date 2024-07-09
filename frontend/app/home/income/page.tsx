@@ -27,8 +27,8 @@ function Loans() {
     refetch();
   };
 
-  const { isError, data, error, refetch, isFetching } = useQuery<
-    Income[],
+  const { isError, data, error, refetch, isLoading } = useQuery<
+    Income,
     AxiosAPIError
   >({
     queryKey: ["userIncome", userId],
@@ -58,17 +58,23 @@ function Loans() {
               <TableCell>Household Income</TableCell>
             </TableRow>
           </TableHead>
-          {isFetching && <TableRow>Loading...</TableRow>}
-          {isError && <TableRow>{error.message}</TableRow>}
-          {data && (
-            <TableBody>
-              {data.map((income, index) => (
-                <TableRow key={index}>
-                  <TableCell>{income.household_income}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          )}
+          <TableBody>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={1}>Loading...</TableCell>
+              </TableRow>
+            )}
+            {isError && (
+              <TableRow>
+                <TableCell colSpan={1}>{error.message}</TableCell>
+              </TableRow>
+            )}
+            {data && (
+              <TableRow>
+                <TableCell>{data.household_income}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </div>

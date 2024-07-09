@@ -19,25 +19,25 @@ import { useQuery } from "@tanstack/react-query";
 const userLoans: Loan[] = [
   {
     reason: "Mortgage",
-    amount: 10000000,
+    loan_amount: 10000000,
     balance_paid: 600000,
     date_created: "March 2023",
   },
   {
     reason: "Mortgage",
-    amount: 10000000,
+    loan_amount: 10000000,
     balance_paid: 600000,
     date_created: "March 2023",
   },
   {
     reason: "Mortgage",
-    amount: 10000000,
+    loan_amount: 10000000,
     balance_paid: 600000,
     date_created: "March 2023",
   },
   {
     reason: "Mortgage",
-    amount: 10000000,
+    loan_amount: 10000000,
     balance_paid: 600000,
     date_created: "March 2023",
   },
@@ -50,7 +50,7 @@ function Loans() {
     refetch();
   };
 
-  const { isError, data, error, refetch, isFetching } = useQuery<
+  const { isError, data, error, refetch, isLoading } = useQuery<
     Loan[],
     AxiosAPIError
   >({
@@ -84,20 +84,27 @@ function Loans() {
               <TableCell>Date Created</TableCell>
             </TableRow>
           </TableHead>
-          {isFetching && <p>Loading...</p>}
-          {isError && <p>{error.message}</p>}
-          {data && (
-            <TableBody>
-              {data.map((loan, index) => (
+          <TableBody>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={4}>Loading...</TableCell>
+              </TableRow>
+            )}
+            {isError && (
+              <TableRow>
+                <TableCell colSpan={4}>{error.message}</TableCell>
+              </TableRow>
+            )}
+            {data &&
+              data.map((loan, index) => (
                 <TableRow key={index}>
                   <TableCell>{loan.reason}</TableCell>
-                  <TableCell>{loan.amount}</TableCell>
+                  <TableCell>{loan.loan_amount}</TableCell>
                   <TableCell>{loan.balance_paid}</TableCell>
                   <TableCell>{loan.date_created}</TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          )}
+          </TableBody>
         </Table>
       </TableContainer>
     </div>
