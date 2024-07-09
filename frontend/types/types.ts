@@ -14,7 +14,7 @@ export interface Asset {
 
 export interface Loan {
   reason: string;
-  amount: number;
+  loan_amount: number;
   balance_paid: number;
   date_created: string;
 }
