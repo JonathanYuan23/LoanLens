@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:5000", // Base URL for your Flask backend
+  baseURL: "http://127.0.0.1:5000/api", // Base URL for your Flask backend
 });
 
 export const getAssets = async (userID: number) => {
-  const res = await api.get(`/api/total-assets/${userID}`);
+  const res = await api.get(`/total-assets/${userID}`);
   return res.data;
 };
 
