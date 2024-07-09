@@ -1,2 +1,23 @@
+reason,loan_amount,balance_paid,date_created
+Legal Settlements,6084.00,3611.00,2019-10-18 00:00:00
+
+asset_id,asset_type,worth
+1,car,58564.00
+
+name,total_assets
+Bryan Ortega,58564.00
+
+user_id
+5
+6
+7
+14
+15
+16
+17
+
 total_household_income
 277303.00
+
+user_id,total_loan_amount,total_balance_paid
+13,6084.00,3611.00
