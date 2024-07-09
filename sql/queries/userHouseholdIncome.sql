@@ -1,16 +1,54 @@
-SELECT SUM(u.income) AS household_income
-FROM Users u
-WHERE u.user_id IN (
-    SELECT household_member
-    FROM (
-        SELECT provider_id AS household_member
-        FROM Dependant
-        WHERE dependant_id = <user_id>
-        UNION
-        SELECT dependant_id AS household_member
-        FROM Dependant
-        WHERE provider_id = <user_id>
-        UNION
-        SELECT <user_id> AS household_member 
-    ) AS household_members
-);
+WITH RECURSIVE household_members AS (
+    -- Start with the user themselves
+    SELECT 
+        user_id
+    FROM 
+        Users
+    WHERE 
+        user_id = <user_id>
+    
+    UNION
+    
+    -- Find dependents and providers
+    SELECT 
+        dependant_id AS user_id
+    FROM 
+        Dependant
+    WHERE 
+        provider_id = <user_id>
+    
+    UNION
+    
+    SELECT 
+        provider_id AS user_id
+    FROM 
+        Dependant
+    WHERE 
+        dependant_id = <user_id>
+    
+    UNION
+    
+    -- Find spouses
+    SELECT 
+        spouse_id_2 AS user_id
+    FROM 
+        Married
+    WHERE 
+        spouse_id_1 = <user_id>
+    
+    UNION
+    
+    SELECT 
+        spouse_id_1 AS user_id
+    FROM 
+        Married
+    WHERE 
+        spouse_id_2 = <user_id>
+)
+SELECT 
+    SUM(u.income) AS total_household_income
+FROM 
+    household_members hm
+JOIN 
+    Users u ON hm.user_id = u.user_id;
+
