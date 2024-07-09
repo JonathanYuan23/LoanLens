@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import Sidebar from "../ui/home/sidebar/sidebar";
-import Navbar from "../ui/navbar/navbar";
 import styles from "../ui/home/home.module.scss";
 
 interface DashboardLayoutProps {
@@ -12,10 +11,7 @@ const Layout = ({ children }: DashboardLayoutProps) => {
       <div className={styles.menu}>
         <Sidebar />
       </div>
-      <div className={styles.content}>
-        {/* <Navbar /> */}
-        {children}
-      </div>
+      <div className={styles.content}>{children}</div>
     </div>
   );
 };

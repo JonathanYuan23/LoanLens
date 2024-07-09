@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TextField,
@@ -16,24 +16,24 @@ import { getAssets } from "app/api/api";
 import { Asset, AxiosAPIError } from "types/types";
 import { useQuery } from "@tanstack/react-query";
 
-const userAssets: Asset[] = [
-  {
-    asset_type: "Car",
-    asset_value: 10000,
-  },
-  {
-    asset_type: "Savings",
-    asset_value: 2000,
-  },
-  {
-    asset_type: "House",
-    asset_value: 100000,
-  },
-  {
-    asset_type: "Watch",
-    asset_value: 4000,
-  },
-];
+// const userAssets: Asset[] = [
+//   {
+//     asset_type: "Car",
+//     asset_value: 10000,
+//   },
+//   {
+//     asset_type: "Savings",
+//     asset_value: 2000,
+//   },
+//   {
+//     asset_type: "House",
+//     asset_value: 100000,
+//   },
+//   {
+//     asset_type: "Watch",
+//     asset_value: 4000,
+//   },
+// ];
 
 function Assets() {
   const [userId, setUserId] = useState<string>("");
