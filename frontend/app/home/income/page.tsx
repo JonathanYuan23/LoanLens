@@ -12,30 +12,29 @@ import {
   TableBody,
 } from "@mui/material";
 import styles from "./income.module.scss";
-interface Income {
-  household_income: number;
-}
+import { AxiosAPIError, Income } from "types/types";
+import { getHouseholdIncome } from "app/api/api";
+import { useQuery } from "@tanstack/react-query";
 
 const userIncome: Income = {
   household_income: 110000,
 };
 
 function Loans() {
-  const [userId, setUserId] = useState<number>();
-  // const [userAssets, setUserAssets] = useState<Asset[] | null>(null);
+  const [userId, setUserId] = useState<string>("");
 
-  // const handleFetchAssets = async () => {
-  //   try {
-  //     const response = await fetch(`/total-assets/${userId}`);
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     const jsonData = await response.json();
-  //     setUserAssets(jsonData.assets);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
+  const handleClick = () => {
+    refetch();
+  };
+
+  const { isError, data, error, refetch, isFetching } = useQuery<
+    Income[],
+    AxiosAPIError
+  >({
+    queryKey: ["userIncome", userId],
+    queryFn: () => getHouseholdIncome(parseInt(userId)),
+    enabled: false,
+  });
 
   return (
     <div className={styles.container}>
@@ -45,33 +44,33 @@ function Loans() {
           id="outlined-basic"
           label="User ID"
           value={userId}
-          onChange={(e) => setUserId(parseInt(e.target.value))}
+          onChange={(e) => setUserId(e.target.value)}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          // onClick={handleFetchAssets}
-        >
+        <Button variant="contained" color="primary" onClick={handleClick}>
           Fetch Income
         </Button>
       </div>
 
-      {userIncome && (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Household Income</TableCell>
-              </TableRow>
-            </TableHead>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Household Income</TableCell>
+            </TableRow>
+          </TableHead>
+          {isFetching && <TableRow>Loading...</TableRow>}
+          {isError && <TableRow>{error.message}</TableRow>}
+          {data && (
             <TableBody>
-              <TableRow>
-                <TableCell>{userIncome.household_income}</TableCell>
-              </TableRow>
+              {data.map((income, index) => (
+                <TableRow key={index}>
+                  <TableCell>{income.household_income}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
-          </Table>
-        </TableContainer>
-      )}
+          )}
+        </Table>
+      </TableContainer>
     </div>
   );
 }

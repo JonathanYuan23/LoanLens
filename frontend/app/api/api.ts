@@ -1,0 +1,20 @@
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "http://127.0.0.1:5000", // Base URL for your Flask backend
+});
+
+export const getAssets = async (userID: number) => {
+  const res = await api.get(`/api/total-assets/${userID}`);
+  return res.data;
+};
+
+export const getLoans = async (userID: number) => {
+  const res = await api.get(`/loan-history/${userID}`);
+  return res.data;
+};
+
+export const getHouseholdIncome = async (userID: number) => {
+  const res = await api.get(`/household-income/${userID}`);
+  return res.data;
+};

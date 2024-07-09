@@ -12,12 +12,9 @@ import {
   TableBody,
 } from "@mui/material";
 import styles from "./loans.module.scss";
-interface Loan {
-  reason: string;
-  amount: number;
-  balance_paid: number;
-  date_created: string;
-}
+import { getLoans } from "app/api/api";
+import { AxiosAPIError, Loan } from "types/types";
+import { useQuery } from "@tanstack/react-query";
 
 const userLoans: Loan[] = [
   {
@@ -47,21 +44,20 @@ const userLoans: Loan[] = [
 ];
 
 function Loans() {
-  const [userId, setUserId] = useState<number>();
-  // const [userAssets, setUserAssets] = useState<Asset[] | null>(null);
+  const [userId, setUserId] = useState<string>("");
 
-  // const handleFetchAssets = async () => {
-  //   try {
-  //     const response = await fetch(`/total-assets/${userId}`);
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     const jsonData = await response.json();
-  //     setUserAssets(jsonData.assets);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
+  const handleClick = () => {
+    refetch();
+  };
+
+  const { isError, data, error, refetch, isFetching } = useQuery<
+    Loan[],
+    AxiosAPIError
+  >({
+    queryKey: ["userLoans", userId],
+    queryFn: () => getLoans(parseInt(userId)),
+    enabled: false,
+  });
 
   return (
     <div className={styles.container}>
@@ -71,30 +67,28 @@ function Loans() {
           id="outlined-basic"
           label="User ID"
           value={userId}
-          onChange={(e) => setUserId(parseInt(e.target.value))}
+          onChange={(e) => setUserId(e.target.value)}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          // onClick={handleFetchAssets}
-        >
+        <Button variant="contained" color="primary" onClick={handleClick}>
           Fetch Loans
         </Button>
       </div>
 
-      {userLoans && (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Loan Reason</TableCell>
-                <TableCell>Loan Amount</TableCell>
-                <TableCell>Balance Paid</TableCell>
-                <TableCell>Date Created</TableCell>
-              </TableRow>
-            </TableHead>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Loan Reason</TableCell>
+              <TableCell>Loan Amount</TableCell>
+              <TableCell>Balance Paid</TableCell>
+              <TableCell>Date Created</TableCell>
+            </TableRow>
+          </TableHead>
+          {isFetching && <p>Loading...</p>}
+          {isError && <p>{error.message}</p>}
+          {data && (
             <TableBody>
-              {userLoans.map((loan, index) => (
+              {data.map((loan, index) => (
                 <TableRow key={index}>
                   <TableCell>{loan.reason}</TableCell>
                   <TableCell>{loan.amount}</TableCell>
@@ -103,9 +97,9 @@ function Loans() {
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
-        </TableContainer>
-      )}
+          )}
+        </Table>
+      </TableContainer>
     </div>
   );
 }
