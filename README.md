@@ -47,7 +47,7 @@ IGNORE 1 LINES;
 
 ## Query tests
 under directory `LoanLens/test`
-- details, descriptions, performance tuning, etc are all provided in report.pdf
+- details, descriptions, performance analysis, etc are all provided in report.pdf
 
 ### Test with sample data
 - Queries and their respective outputs are under `LoanLens/test/test_sample`
