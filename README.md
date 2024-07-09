@@ -53,7 +53,7 @@ under directory `LoanLens/test`
 - All the query and output uses the data in `LoanLens/test/sample_db` except for `userHouseholdIncome.sql` and `userHousehold.sql` as there was a change in the database schema and the sample database does not use the new schema
     - The `userHouseholdIncome.sql` and `userHousehold.sql` queries are tested with production data
 
-## Test with production data
+### Test with production data
 - Tested using the production data found in `LoanLens/util/prod_data`
 - All the query is tested in `LoanLens/test/testproduction.sql`
 - The respective output is in `LoanLens/test/testproduction.out`
