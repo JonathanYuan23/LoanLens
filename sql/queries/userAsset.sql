@@ -7,6 +7,6 @@ FROM
 JOIN 
     AssetToOwner ON Assets.asset_id = AssetToOwner.asset_id
 WHERE 
-    AssetToOwner.user_id = 4;
+    AssetToOwner.user_id = <user_id>;
 
 
