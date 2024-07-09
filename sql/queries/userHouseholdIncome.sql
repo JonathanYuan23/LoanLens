@@ -1,54 +1,55 @@
-WITH RECURSIVE household_members AS (
-    -- Start with the user themselves
+WITH RECURSIVE HouseholdMembers AS (
+    -- Anchor member: the given user
     SELECT 
-        user_id
+        user_id 
     FROM 
-        Users
+        Users 
     WHERE 
         user_id = <user_id>
-    
+
     UNION
-    
-    -- Find dependents and providers
+
+    -- Get dependents and providers
     SELECT 
-        dependant_id AS user_id
+        d.dependant_id AS user_id 
     FROM 
-        Dependant
-    WHERE 
-        provider_id = <user_id>
-    
+        Dependants d
+    JOIN 
+        HouseholdMembers hm ON d.provider_id = hm.user_id
+
     UNION
-    
+
     SELECT 
-        provider_id AS user_id
+        d.provider_id AS user_id 
     FROM 
-        Dependant
-    WHERE 
-        dependant_id = <user_id>
-    
+        Dependants d
+    JOIN 
+        HouseholdMembers hm ON d.dependant_id = hm.user_id
+
     UNION
-    
-    -- Find spouses
+
+    -- Get spouses
     SELECT 
-        spouse_id_2 AS user_id
+        m.spouse_id_2 AS user_id 
     FROM 
-        Married
-    WHERE 
-        spouse_id_1 = <user_id>
-    
+        Married m 
+    JOIN 
+        HouseholdMembers hm ON m.spouse_id_1 = hm.user_id
+
     UNION
-    
+
     SELECT 
-        spouse_id_1 AS user_id
+        m.spouse_id_1 AS user_id 
     FROM 
-        Married
-    WHERE 
-        spouse_id_2 = <user_id>
+        Married m 
+    JOIN 
+        HouseholdMembers hm ON m.spouse_id_2 = hm.user_id
 )
+
 SELECT 
     SUM(u.income) AS total_household_income
 FROM 
-    household_members hm
+    HouseholdMembers hm
 JOIN 
     Users u ON hm.user_id = u.user_id;
 
