@@ -1,0 +1,10 @@
+CREATE INDEX idx_loans_user_id ON Loans(user_id);
+CREATE INDEX idx_assets_asset_id ON Assets(asset_id);
+CREATE INDEX idx_assettoowner_asset_id ON AssetToOwner(asset_id);
+CREATE INDEX idx_assettoowner_user_id ON AssetToOwner(user_id);
+CREATE INDEX idx_users_user_id ON Users(user_id);
+CREATE INDEX idx_dependant_provider_id ON Dependant(provider_id);
+CREATE INDEX idx_dependant_dependant_id ON Dependant(dependant_id);
+CREATE INDEX idx_married_spouse_id_1 ON Married(spouse_id_1);
+CREATE INDEX idx_married_spouse_id_2 ON Married(spouse_id_2);
+CREATE INDEX idx_users_income ON Users(income);

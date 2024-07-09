@@ -157,3 +157,4 @@ SELECT user_id, SUM(loan_amount) AS total_loan_amount, SUM(balance_paid) AS tota
 FROM Loans
 WHERE user_id = 13
 GROUP BY user_id;
+

@@ -39,7 +39,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Loans (
-    loan_id INTEGER PRIMARY KEY,
+    loan_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     user_id INTEGER NOT NULL,
     reason VARCHAR(255) NOT NULL,
     loan_amount DECIMAL(10, 2) NOT NULL CHECK (loan_amount >= 0),

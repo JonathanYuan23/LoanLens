@@ -55,5 +55,5 @@ under directory `LoanLens/test`
 
 ### Test with production data
 - Tested using the production data found in `LoanLens/util/prod_data`
-- All the query is tested in `LoanLens/test/testproduction.sql`
-- The respective output is in `LoanLens/test/testproduction.out`
+- All the query is tested in `LoanLens/test/test_prod/testproduction.sql`
+- The respective output is in `LoanLens/test/test_prod/testproduction.out`
