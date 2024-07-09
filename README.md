@@ -58,3 +58,47 @@ under directory `LoanLens/test`
 - Tested using the production data found in `LoanLens/util/prod_data`
 - All the query is tested in `LoanLens/test/test_prod/testproduction.sql`
 - The respective output is in `LoanLens/test/test_prod/testproduction.out`
+
+## Backend
+The backend is created with Python (Flask). It uses sqlalchemy to make queries in the MySQL database.
+
+Currently, there are 3 working API endpoints with the following JSON return format
+```1. /api/total-assets/<int:user_id> (GET)```
+```
+{
+  "user_id": "<user_id>",
+  "assets": [
+    {
+      "asset_type": "<asset_type>",
+      "asset_value": <value_as_number>
+    }
+  ]
+}
+```
+```2. /api/loan-history/<int:user_id> (GET)```
+```
+{
+  "user_id": "<user_id>",
+  "loans": [
+    {
+      "reason": "<loan_reason>",
+      "loan_amount": <loan_amount_as_number>,
+      "balance_paid": <loan_balance_paid_as_number>,
+      "date_created": "<date_created>"
+    }
+  ]
+}
+```
+```3. /api/household-income/<int:user_id> (GET)```
+```
+{
+  "user_id": "<user_id>",
+  "household_income": <household_income_as_number>
+}
+```
+
+To run the flask sever, ensure you have the latest Python version installed. Then navigate into the backend directory, then run the following commands. 
+```pip install -r requirements.txt``` 
+```python app.py```
+The server should then be live on ```http://127.0.0.1:5000```
+## Frontend
