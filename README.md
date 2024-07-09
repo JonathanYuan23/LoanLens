@@ -121,7 +121,7 @@ The server should then be live on `http://127.0.0.1:5000`
 
 ## Frontend
 
-The backend is created with Next.js 14, React.js, and TypeScript. It uses TanStack react-query to make queries to the API endpoints.
+The frontend is created with Next.js 14, React.js, and TypeScript. It uses TanStack react-query to make queries to the API endpoints.
 
 Currently, there are 3 working features on the frontend.
 
