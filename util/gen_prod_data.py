@@ -154,14 +154,16 @@ def generate_loans(user_loans, loan_reasons):
 
     # generate loan data
     for i, user_id in enumerate(user_loans):
-        reason = loan_reasons[random.randint(0, len(loan_reasons) - 1)]
-        loan_amount = random.randint(1000, 200000)
-        balance_paid = random.randint(0, loan_amount)
-        start_date = date(2010, 1, 1)
-        end_date = date.today()
-        date_created = fake.date_between(start_date=start_date, end_date=end_date)
+        j = random.randint(1, 3)
+        for _ in range(j):
+            reason = loan_reasons[random.randint(0, len(loan_reasons) - 1)]
+            loan_amount = random.randint(1000, 200000)
+            balance_paid = random.randint(0, loan_amount)
+            start_date = date(2010, 1, 1)
+            end_date = date.today()
+            date_created = fake.date_between(start_date=start_date, end_date=end_date)
 
-        loan_data.append([i + 1, user_id, reason, loan_amount, balance_paid, date_created])
+            loan_data.append([i + 1, user_id, reason, loan_amount, balance_paid, date_created])
 
     loan_df = pd.DataFrame(loan_data, columns=['loan_id', 'user_id', 'reason', 'loan_amount', 'balance_paid', 'date_created'])
     loan_df.to_csv('prod_data/loans.csv', index=False)
