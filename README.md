@@ -16,7 +16,7 @@ Our handmade sample data is in `test/sample_db`. There is a helper script `util/
 
 ## Production Database
 
-To bulk insert data from a local csv file remotely, you'll need to add this to your `sqld.cnf` config file on the MySQL server (usually found at `/etc/mysql/mysql.conf.d/mysqld.cnf`):
+To bulk insert data from a local csv file remotely, you'll need to add this to your `mysqld.cnf` config file on the MySQL server (usually found at `/etc/mysql/mysql.conf.d/mysqld.cnf`):
 
 ```bash
 [mysqld]
@@ -37,9 +37,11 @@ sudo service mysql stop
 sudo service mysql start
 ```
 
-This lets you use MySQL's `LOAD DATA INFILE` syntax with local file paths:
+Assuming that you are connected to the db as user with remote write permissions, this lets you use MySQL's `LOAD DATA INFILE` syntax with local file paths:
 
 ```sql
+-- util/load_data.sql
+
 LOAD DATA LOCAL INFILE './prod_data/cities.csv' INTO TABLE City
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
@@ -52,9 +54,18 @@ IGNORE 1 LINES;
 ...
 ```
 
+To actually generate the production csv files, go to the `util` directory and run `gen_prod_data.py`, which will output the files in `util/prod_data`.
+
+Finally, you will need to execute
+```
+python runner.py bulk_insert
+```
+
+with the credentials provided in `.env`.
+
 ## Query tests
 
-under directory `LoanLens/test`
+Under directory `LoanLens/test`
 
 - details, descriptions, performance analysis, etc are all provided in report.pdf
 

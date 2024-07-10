@@ -6,5 +6,5 @@ SELECT
 FROM 
     Loans
 WHERE 
-    user_id = 4;
+    user_id = <user_id>;
 
