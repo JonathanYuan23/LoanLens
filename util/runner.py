@@ -9,6 +9,7 @@ from mysql.connector import Error
 SET_UP = 'set_up'
 INSERT = 'insert'
 BULK_INSERT = 'bulk_insert'
+BULK_DOWNLOAD = 'bulk_download'
 
 SET_UP_PATH = '../sql/create_table.sql'
 INSERT_PATHS = [
@@ -22,6 +23,7 @@ INSERT_PATHS = [
     ('../test/sample_db/loans.csv', 'Loans')
 ]
 BULK_INSERT_PATH = './load_data.sql'
+BULK_DOWNLOAD_PATH = './download_data.sql'
 
 load_dotenv()
 
@@ -64,6 +66,9 @@ def setup(connection):
 def bulk_insert(connection):
     execute_sql_file(BULK_INSERT_PATH, connection)
 
+def bulk_download(connection):
+    execute_sql_file(BULK_DOWNLOAD_PATH, connection)
+
 def insert(connection):
     cursor = connection.cursor()
     for csv_path, table in INSERT_PATHS:
@@ -80,7 +85,7 @@ def insert(connection):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process choices')
-    parser.add_argument('command', choices=[SET_UP, INSERT, BULK_INSERT], help='Command to run')
+    parser.add_argument('command', choices=[SET_UP, INSERT, BULK_INSERT, BULK_DOWNLOAD], help='Command to run')
 
     args = parser.parse_args()
 
@@ -91,5 +96,7 @@ if __name__ == "__main__":
         insert(connection)
     elif args.command == BULK_INSERT:
         bulk_insert(connection)
+    elif args.command == BULK_DOWNLOAD:
+        bulk_download(connection)
 
     connection.close()
