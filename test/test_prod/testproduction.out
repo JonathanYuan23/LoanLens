@@ -1,23 +1,26 @@
-reason,loan_amount,balance_paid,date_created
-Legal Settlements,6084.00,3611.00,2019-10-18 00:00:00
+reason, loan_amount, balance_paid, date_created
+Investment Opportunities, 180329.00, 126560.00, 2013-06-09 00:00:00
 
-asset_id,asset_type,worth
-1,car,58564.00
+asset_id, asset_type, worth
+9, house, 1142018.00
+10, car, 80270.00
 
-name,total_assets
-Bryan Ortega,58564.00
+name, total_assets
+Michael Patel, 1222288.00
 
 user_id
-5
 6
+1
+10
+2
+3
+4
+5
 7
-14
-15
-16
-17
+9
 
 total_household_income
-277303.00
+324292.00
 
-user_id,total_loan_amount,total_balance_paid
-13,6084.00,3611.00
+user_id, total_loan_amount, total_balance_paid
+14, 152405.00, 50211.00

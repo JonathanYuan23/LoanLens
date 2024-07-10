@@ -7,7 +7,7 @@ SELECT
 FROM 
     Loans
 WHERE 
-    user_id = 13;
+    user_id = 22;
 
 -- delimiter
 --------------------------------------------------------------
@@ -22,7 +22,7 @@ FROM
 JOIN 
     AssetToOwner ON Assets.asset_id = AssetToOwner.asset_id
 WHERE 
-    AssetToOwner.user_id = 6;
+    AssetToOwner.user_id = 21;
 
 -- delimiter
 --------------------------------------------------------------
@@ -32,7 +32,7 @@ SELECT u.name, SUM(a.worth) AS total_assets
 FROM Users u
 LEFT JOIN AssetToOwner ao ON u.user_id = ao.user_id
 LEFT JOIN Assets a ON ao.asset_id = a.asset_id
-WHERE u.user_id = 6
+WHERE u.user_id = 21
 GROUP BY u.user_id;
 
 -- delimiter
@@ -155,6 +155,6 @@ JOIN
 -- userLoanInfo.sql
 SELECT user_id, SUM(loan_amount) AS total_loan_amount, SUM(balance_paid) AS total_balance_paid
 FROM Loans
-WHERE user_id = 13
+WHERE user_id = 14
 GROUP BY user_id;
 
