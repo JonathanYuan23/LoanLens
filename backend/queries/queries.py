@@ -34,24 +34,65 @@ def get_loan_history(user_id):
     return {'user_id': user_id, 'loans': loans}
 
 def get_household_income(user_id):
-    sql_query = text("""
-        SELECT SUM(u.income) AS household_income
-        FROM Users u
-        WHERE u.user_id IN (
-            SELECT household_member
-            FROM (
-                SELECT provider_id AS household_member
-                FROM Dependant
-                WHERE dependant_id = :user_id
-                UNION
-                SELECT dependant_id AS household_member
-                FROM Dependant
-                WHERE provider_id = :user_id
-                UNION
-                SELECT :user_id AS household_member 
-            ) AS household_members
-        );
-    """)
-    result = db.session.execute(sql_query, {'user_id': int(user_id)})
-    household_income = result.scalar()
-    return {'user_id': user_id, 'household_income': household_income}
+    try:
+        sql_query = text("""
+WITH RECURSIVE HouseholdMembers AS (
+    -- Anchor member: the given user
+    SELECT 
+        user_id 
+    FROM 
+        Users 
+    WHERE 
+        user_id = :user_id
+
+    UNION
+
+    -- Get dependents and providers
+    SELECT 
+        d.dependant_id AS user_id 
+    FROM 
+        Dependant d
+    JOIN 
+        HouseholdMembers hm ON d.provider_id = hm.user_id
+
+    UNION
+
+    SELECT 
+        d.provider_id AS user_id 
+    FROM 
+        Dependant d
+    JOIN 
+        HouseholdMembers hm ON d.dependant_id = hm.user_id
+
+    UNION
+
+    -- Get spouses
+    SELECT 
+        m.spouse_id_2 AS user_id 
+    FROM 
+        Married m 
+    JOIN 
+        HouseholdMembers hm ON m.spouse_id_1 = hm.user_id
+
+    UNION
+
+    SELECT 
+        m.spouse_id_1 AS user_id 
+    FROM 
+        Married m 
+    JOIN 
+        HouseholdMembers hm ON m.spouse_id_2 = hm.user_id
+)
+
+SELECT 
+    SUM(u.income) AS total_household_income
+FROM 
+    HouseholdMembers hm
+JOIN 
+    Users u ON hm.user_id = u.user_id;
+        """)
+        result = db.session.execute(sql_query, {'user_id': int(user_id)})
+        household_income = result.scalar()
+        return {'user_id': user_id, 'household_income': household_income}
+    except Exception as e:
+        return {'error': str(e)}
