@@ -13,7 +13,7 @@ WITH RECURSIVE HouseholdMembers AS (
     SELECT 
         d.dependant_id AS user_id 
     FROM 
-        Dependants d
+        Dependant d
     JOIN 
         HouseholdMembers hm ON d.provider_id = hm.user_id
 
@@ -22,7 +22,7 @@ WITH RECURSIVE HouseholdMembers AS (
     SELECT 
         d.provider_id AS user_id 
     FROM 
-        Dependants d
+        Dependant d
     JOIN 
         HouseholdMembers hm ON d.dependant_id = hm.user_id
 
