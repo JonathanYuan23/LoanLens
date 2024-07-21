@@ -13,6 +13,7 @@ export interface AssetsType {
 }
 
 export interface Asset {
+  id: number;
   asset_type: string;
   asset_value: number;
 }
@@ -23,6 +24,7 @@ export interface LoansType {
 }
 
 export interface Loan {
+  id: number;
   reason: string;
   loan_amount: number;
   balance_paid: number;
