@@ -13,27 +13,35 @@ import {
 } from "@mui/material";
 import styles from "./assets.module.scss";
 import { getAssets } from "app/api/api";
-import { Asset, AxiosAPIError } from "types/types";
+import { AssetsType, AxiosAPIError } from "types/types";
 import { useQuery } from "@tanstack/react-query";
 
-// const userAssets: Asset[] = [
-//   {
-//     asset_type: "Car",
-//     asset_value: 10000,
-//   },
-//   {
-//     asset_type: "Savings",
-//     asset_value: 2000,
-//   },
-//   {
-//     asset_type: "House",
-//     asset_value: 100000,
-//   },
-//   {
-//     asset_type: "Watch",
-//     asset_value: 4000,
-//   },
-// ];
+// test data
+const userAssets: AssetsType = {
+  total_asset_amount: 12342334,
+  assets: [
+    {
+      id: 1,
+      asset_type: "Car",
+      asset_value: 10000,
+    },
+    {
+      id: 2,
+      asset_type: "Savings",
+      asset_value: 2000,
+    },
+    {
+      id: 3,
+      asset_type: "House",
+      asset_value: 100000,
+    },
+    {
+      id: 4,
+      asset_type: "Watch",
+      asset_value: 4000,
+    },
+  ],
+};
 
 function Assets() {
   const [userId, setUserId] = useState<string>("");
@@ -42,13 +50,10 @@ function Assets() {
     refetch();
   };
 
-  const {
-    isError,
-    data: assets,
-    error,
-    refetch,
-    isLoading,
-  } = useQuery<Asset[], AxiosAPIError>({
+  const { isError, data, error, refetch, isLoading } = useQuery<
+    AssetsType,
+    AxiosAPIError
+  >({
     queryKey: ["userAssets", userId],
     queryFn: () => getAssets(parseInt(userId)),
     enabled: false,
@@ -69,35 +74,68 @@ function Assets() {
         </Button>
       </div>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Asset Type</TableCell>
-              <TableCell>Asset Value</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading && (
+      <div className={styles.tableContainer}>
+        <TableContainer component={Paper}>
+          Assets Summary
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={2}>Loading...</TableCell>
+                <TableCell>Total Amount in Assets</TableCell>
               </TableRow>
-            )}
-            {isError && (
-              <TableRow>
-                <TableCell colSpan={2}>{error.message}</TableCell>
-              </TableRow>
-            )}
-            {assets &&
-              assets?.map((asset, index) => (
-                <TableRow key={index}>
-                  <TableCell>{asset.asset_type}</TableCell>
-                  <TableCell>{asset.asset_value}</TableCell>
+            </TableHead>
+            <TableBody>
+              {isLoading && (
+                <TableRow>
+                  <TableCell colSpan={4}>Loading...</TableCell>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+              )}
+              {isError && (
+                <TableRow>
+                  <TableCell colSpan={4}>{error.message}</TableCell>
+                </TableRow>
+              )}
+              {data && (
+                <TableRow>
+                  <TableCell>{data.total_asset_amount}</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <TableContainer component={Paper}>
+          Assets Breakdown
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Asset ID</TableCell>
+                <TableCell>Asset Type</TableCell>
+                <TableCell>Asset Value</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {isLoading && (
+                <TableRow>
+                  <TableCell colSpan={2}>Loading...</TableCell>
+                </TableRow>
+              )}
+              {isError && (
+                <TableRow>
+                  <TableCell colSpan={2}>{error.message}</TableCell>
+                </TableRow>
+              )}
+              {data &&
+                data.assets.map((asset, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{asset.id}</TableCell>
+                    <TableCell>{asset.asset_type}</TableCell>
+                    <TableCell>{asset.asset_value}</TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
   );
 }
