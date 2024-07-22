@@ -11,10 +11,13 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
+import PayLoanDialog from "./payLoan";
+
 import styles from "./loans.module.scss";
 import { getLoans } from "app/api/api";
 import { AxiosAPIError, LoansType } from "types/types";
 import { useQuery } from "@tanstack/react-query";
+import AddLoanDialog from "./addLoan";
 
 // test data
 const userLoans: LoansType = {
@@ -54,8 +57,27 @@ const userLoans: LoansType = {
 function Loans() {
   const [userId, setUserId] = useState<string>("");
 
+  const [isPayLoanDialogOpen, setIsPayLoanDialogOpen] =
+    useState<boolean>(false);
+  const [isAddLoanDialogOpen, setIsAddLoanDialogOpen] =
+    useState<boolean>(false);
+
+  const onPayLoanDialogClose = () => {
+    setIsPayLoanDialogOpen(false);
+  };
+  const onAddLoanDialogClose = () => {
+    setIsAddLoanDialogOpen(false);
+  };
+
   const handleClick = () => {
     refetch();
+  };
+
+  const handlePayClick = () => {
+    setIsPayLoanDialogOpen(true);
+  };
+  const handleAddLoanClick = () => {
+    setIsAddLoanDialogOpen(true);
   };
 
   const { isError, data, error, refetch, isLoading } = useQuery<
@@ -69,19 +91,32 @@ function Loans() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.search}>
-        <TextField
-          size="small"
-          id="outlined-basic"
-          label="User ID"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-        />
-        <Button variant="contained" color="primary" onClick={handleClick}>
-          Fetch Loans
-        </Button>
+      <div className={styles.topBar}>
+        <div className={styles.search}>
+          <TextField
+            size="small"
+            id="outlined-basic"
+            label="User ID"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+          />
+          <Button variant="contained" color="primary" onClick={handleClick}>
+            Fetch Loans
+          </Button>
+        </div>
+        <div className={styles.options}>
+          <Button variant="contained" color="primary" onClick={handlePayClick}>
+            Pay Loan
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddLoanClick}
+          >
+            Add Loan
+          </Button>
+        </div>
       </div>
-
       <div className={styles.tableContainer}>
         <TableContainer component={Paper}>
           Loan Summary
@@ -148,6 +183,70 @@ function Loans() {
           </Table>
         </TableContainer>
       </div>
+
+      <PayLoanDialog
+        isPayLoanDialogOpen={isPayLoanDialogOpen}
+        onPayLoanDialogClose={onPayLoanDialogClose}
+      />
+      <AddLoanDialog
+        isAddLoanDialogOpen={isAddLoanDialogOpen}
+        onAddLoanDialogClose={onAddLoanDialogClose}
+      />
+      {/* 
+      <Dialog
+        open={IsPayLoanDialogOpen}
+        onClose={onPayLoanDialogClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Pay Loan</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Pay an amount off of a User's Loan
+          </DialogContentText>
+          <div className={styles.fields}>
+            <TextField
+              autoFocus
+              fullWidth
+              placeholder="First Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+          <div className={styles.fields}>
+            <TextField
+              fullWidth
+              placeholder="City"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+            <DatePicker
+              label="Date of Birth"
+              value={dob}
+              onChange={(newDob) => setDob(newDob)}
+            />
+          </div>
+          <div className={styles.fields}>
+            <TextField
+              fullWidth
+              placeholder="Company Name"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              placeholder="Job Title"
+              value={jobTitle}
+              onChange={(e) => setJobTitle(e.target.value)}
+            />
+          </div>
+        </DialogContent>
+      </Dialog> */}
     </div>
   );
 }

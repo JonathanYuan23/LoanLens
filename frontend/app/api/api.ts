@@ -1,3 +1,4 @@
+import { AddLoanType, PayLoanType } from "types/types";
 import axios from "axios";
 
 const api = axios.create({
@@ -12,6 +13,15 @@ export const getAssets = async (userID: number) => {
 export const getLoans = async (userID: number) => {
   const res = await api.get(`/loan-history/${userID}`);
   return res.data.loans;
+};
+
+export const payLoanAPI = async (data: PayLoanType) => {
+  const res = await api.post(`/fillin/`, data);
+  return res.data;
+};
+export const addLoanAPI = async (data: AddLoanType) => {
+  const res = await api.post(`/fillin/`, data);
+  return res.data;
 };
 
 export const getHouseholdIncome = async (userID: number) => {

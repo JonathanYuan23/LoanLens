@@ -31,6 +31,20 @@ export interface Loan {
   date_created: string;
 }
 
+export interface PayLoanType {
+  userId: number;
+  loanId: number;
+  amount: number;
+}
+
+export interface AddLoanType {
+  userId: number;
+  reason: string;
+  loan_amount: number;
+  balance_paid: number;
+  date_created: string;
+}
+
 export interface Income {
   household_income: number;
 }
