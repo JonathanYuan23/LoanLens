@@ -45,6 +45,13 @@ export interface AddLoanType {
   date_created: string;
 }
 
+export interface AddUserType {
+  name: string;
+  address: string;
+  dob: string;
+  companyName: number;
+  jobTitle: string;
+}
 export interface Income {
   household_income: number;
 }
