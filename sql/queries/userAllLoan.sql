@@ -1,4 +1,5 @@
 SELECT 
+    loan_id,
     reason,
     loan_amount,
     balance_paid,
