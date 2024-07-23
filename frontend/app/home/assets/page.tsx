@@ -10,6 +10,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Typography,
 } from "@mui/material";
 import styles from "./assets.module.scss";
 import { getAssets } from "app/api/api";
@@ -71,8 +72,8 @@ function Assets() {
       </div>
 
       <div className={styles.tableContainer}>
+        <Typography fontSize="16pt"> Assets Summary</Typography>
         <TableContainer component={Paper}>
-          Assets Summary
           <Table>
             <TableHead>
               <TableRow>
@@ -98,9 +99,8 @@ function Assets() {
             </TableBody>
           </Table>
         </TableContainer>
-
+        <Typography fontSize="16pt"> Assets Breakdown</Typography>
         <TableContainer component={Paper}>
-          Assets Breakdown
           <Table>
             <TableHead>
               <TableRow>

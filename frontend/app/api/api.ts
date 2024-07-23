@@ -33,3 +33,8 @@ export const addUserAPI = async (data: AddUserType) => {
   const res = await api.post(`/register-user/`, data);
   return res.data;
 };
+
+export const getUserAPI = async (data: string) => {
+  const res = await api.get(`/search-user/${data}`);
+  return res.data;
+};

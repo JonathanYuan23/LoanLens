@@ -60,6 +60,17 @@ export interface AddUserType {
   job_title: string;
   income: number;
 }
+
+export interface UserType {
+  user_id: number;
+  name: string;
+  address: string;
+  dob: string;
+  city_name: string;
+  company_name: string;
+  job_title: string;
+  income: number;
+}
 export interface Income {
   household_income: number;
 }

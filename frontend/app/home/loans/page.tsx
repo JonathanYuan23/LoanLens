@@ -10,6 +10,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Typography,
 } from "@mui/material";
 import PayLoanDialog from "./payLoan";
 
@@ -127,8 +128,9 @@ function Loans() {
         </div>
       </div>
       <div className={styles.tableContainer}>
+        <Typography fontSize="16pt"> Loan Summary</Typography>
+
         <TableContainer component={Paper}>
-          Loan Summary
           <Table>
             <TableHead>
               <TableRow>
@@ -154,9 +156,9 @@ function Loans() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Typography fontSize="16pt"> Loans Breakdown</Typography>
 
         <TableContainer component={Paper}>
-          Loan Breakdown
           <Table>
             <TableHead>
               <TableRow>
