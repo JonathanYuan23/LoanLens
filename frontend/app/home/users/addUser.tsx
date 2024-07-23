@@ -39,7 +39,7 @@ function AddUserDialog({
     addUser({
       name,
       address,
-      dob: dob!.format("ddd, DD MMM YYYY HH:mm:ss [GMT]"),
+      dob: dob!.format("YYYY-MM-DD"),
       company_name: companyName,
       city_name: cityName,
       job_title: jobTitle,

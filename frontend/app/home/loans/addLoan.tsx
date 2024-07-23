@@ -7,6 +7,7 @@ import {
   TextField,
   DialogActions,
   Button,
+  Typography,
 } from "@mui/material";
 import styles from "./loans.module.scss";
 import { AxiosAPIError, Loan, AddLoanType } from "types/types";
@@ -38,7 +39,7 @@ function AddLoanDialog({
       loan_reason: reason,
       loan_amount: loanAmount!,
       balance_paid: balancePaid!,
-      date_created: dateCreated!.format("ddd, DD MMM YYYY HH:mm:ss [GMT]"),
+      date_created: dateCreated!.format("YYYY-MM-DD"),
     });
   };
   const addLoanMutation = useMutation<Loan, AxiosAPIError, AddLoanType>({
@@ -94,6 +95,7 @@ function AddLoanDialog({
             inputProps={{ type: "number" }}
             type="number"
             fullWidth
+            error={loanAmount !== null && loanAmount <= 0}
             placeholder="Loan Amount"
             value={loanAmount}
             onChange={(e) => setLoanAmount(parseInt(e.target.value))}
@@ -107,12 +109,28 @@ function AddLoanDialog({
             onChange={(e) => setBalancePaid(parseInt(e.target.value))}
           />
         </div>
+        <div>
+          {loanAmount !== null &&
+            balancePaid !== null &&
+            loanAmount < balancePaid && (
+              <Typography color="red">
+                Balance Paid can't be greater than loan amount.
+              </Typography>
+            )}
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={onAddLoanDialogClose}>Cancel</Button>
         <Button
           disabled={
-            !(userId && loanAmount && reason && dateCreated && balancePaid)
+            !(
+              userId &&
+              loanAmount &&
+              reason &&
+              dateCreated &&
+              balancePaid &&
+              loanAmount >= balancePaid
+            )
           }
           onClick={onSubmitClick}
           variant="contained"
