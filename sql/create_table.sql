@@ -45,7 +45,8 @@ CREATE TABLE Loans (
     loan_amount DECIMAL(10, 2) NOT NULL CHECK (loan_amount >= 0),
     balance_paid DECIMAL(10, 2) NOT NULL CHECK (balance_paid >= 0),
     date_created TIMESTAMP NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CHECK (balance_paid <= loan_amount)
 );
 
 CREATE TABLE AssetToOwner (
