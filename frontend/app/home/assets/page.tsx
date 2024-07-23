@@ -21,22 +21,18 @@ const userAssets: AssetsType = {
   total_asset_amount: 12342334,
   assets: [
     {
-      id: 1,
       asset_type: "Car",
       asset_value: 10000,
     },
     {
-      id: 2,
       asset_type: "Savings",
       asset_value: 2000,
     },
     {
-      id: 3,
       asset_type: "House",
       asset_value: 100000,
     },
     {
-      id: 4,
       asset_type: "Watch",
       asset_value: 4000,
     },
@@ -108,7 +104,6 @@ function Assets() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Asset ID</TableCell>
                 <TableCell>Asset Type</TableCell>
                 <TableCell>Asset Value</TableCell>
               </TableRow>
@@ -127,7 +122,6 @@ function Assets() {
               {data &&
                 data.assets.map((asset, index) => (
                   <TableRow key={index}>
-                    <TableCell>{asset.id}</TableCell>
                     <TableCell>{asset.asset_type}</TableCell>
                     <TableCell>{asset.asset_value}</TableCell>
                   </TableRow>

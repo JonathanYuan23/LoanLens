@@ -7,7 +7,7 @@ const api = axios.create({
 
 export const getAssets = async (userID: number) => {
   const res = await api.get(`/total-assets/${userID}`);
-  return res.data.assets;
+  return res.data;
 };
 
 export const getLoans = async (userID: number) => {

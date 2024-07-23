@@ -13,7 +13,6 @@ export interface AssetsType {
 }
 
 export interface Asset {
-  id: number;
   asset_type: string;
   asset_value: number;
 }
