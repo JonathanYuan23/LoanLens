@@ -12,7 +12,7 @@ export const getAssets = async (userID: number) => {
 
 export const getLoans = async (userID: number) => {
   const res = await api.get(`/loan-history/${userID}`);
-  return res.data.loans;
+  return res.data;
 };
 
 export const payLoanAPI = async (data: PayLoanType) => {

@@ -23,7 +23,7 @@ export interface LoansType {
 }
 
 export interface Loan {
-  id: number;
+  loan_id: number;
   reason: string;
   loan_amount: number;
   balance_paid: number;

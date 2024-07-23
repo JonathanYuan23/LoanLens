@@ -24,28 +24,28 @@ const userLoans: LoansType = {
   total_loan_amount: 22929292,
   loans: [
     {
-      id: 1,
+      loan_id: 1,
       reason: "Mortgage",
       loan_amount: 10000000,
       balance_paid: 600000,
       date_created: "March 2023",
     },
     {
-      id: 2,
+      loan_id: 2,
       reason: "Mortgage",
       loan_amount: 10000000,
       balance_paid: 600000,
       date_created: "March 2023",
     },
     {
-      id: 3,
+      loan_id: 3,
       reason: "Mortgage",
       loan_amount: 10000000,
       balance_paid: 600000,
       date_created: "March 2023",
     },
     {
-      id: 4,
+      loan_id: 4,
       reason: "Mortgage",
       loan_amount: 10000000,
       balance_paid: 600000,
@@ -172,7 +172,7 @@ function Loans() {
               {data &&
                 data.loans.map((loan, index) => (
                   <TableRow key={index}>
-                    <TableCell>{loan.id}</TableCell>
+                    <TableCell>{loan.loan_id}</TableCell>
                     <TableCell>{loan.reason}</TableCell>
                     <TableCell>{loan.loan_amount}</TableCell>
                     <TableCell>{loan.balance_paid}</TableCell>
