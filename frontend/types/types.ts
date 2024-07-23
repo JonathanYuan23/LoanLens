@@ -31,14 +31,13 @@ export interface Loan {
 }
 
 export interface PayLoanType {
-  userId: number;
-  loanId: number;
+  loan_id: number;
   amount: number;
 }
 
 export interface AddLoanType {
-  userId: number;
-  reason: string;
+  user_id: number;
+  loan_reason: string;
   loan_amount: number;
   balance_paid: number;
   date_created: string;

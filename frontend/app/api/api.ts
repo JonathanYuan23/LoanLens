@@ -16,11 +16,11 @@ export const getLoans = async (userID: number) => {
 };
 
 export const payLoanAPI = async (data: PayLoanType) => {
-  const res = await api.post(`/fillin/`, data);
+  const res = await api.put(`/pay-loan/`, data);
   return res.data;
 };
 export const addLoanAPI = async (data: AddLoanType) => {
-  const res = await api.post(`/fillin/`, data);
+  const res = await api.post(`/new-loan/`, data);
   return res.data;
 };
 

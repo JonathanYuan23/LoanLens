@@ -16,22 +16,24 @@ import { payLoanAPI } from "app/api/api";
 interface AddLoanDialogProps {
   isPayLoanDialogOpen: boolean;
   onPayLoanDialogClose: () => void;
+  refetch: () => void;
 }
 
 function PayLoanDialog({
   isPayLoanDialogOpen,
   onPayLoanDialogClose,
+  refetch,
 }: AddLoanDialogProps) {
-  const [userId, setUserId] = useState("");
-  const [loanId, setLoanId] = useState("");
-  const [payAmount, setPayAmount] = useState(0);
+  const [loanId, setLoanId] = useState<number | null>(null);
+  const [payAmount, setPayAmount] = useState<number | null>(null);
 
   const onSubmitClick = () => {
-    onPayLoanDialogClose();
+    payLoan({ loan_id: loanId!, amount: payAmount! });
   };
   const payLoanMutation = useMutation<Loan, AxiosAPIError, PayLoanType>({
     mutationFn: (data) => payLoanAPI(data),
     onSuccess: () => {
+      refetch();
       onPayLoanDialogClose();
     },
     meta: {
@@ -57,19 +59,13 @@ function PayLoanDialog({
         <div className={styles.fields}>
           <TextField
             autoFocus
-            fullWidth
-            placeholder="User ID"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-          />
-          <TextField
+            inputProps={{ type: "number" }}
+            type="number"
             fullWidth
             placeholder="Loan ID"
             value={loanId}
-            onChange={(e) => setLoanId(e.target.value)}
+            onChange={(e) => setLoanId(parseInt(e.target.value))}
           />
-        </div>
-        <div className={styles.fields}>
           <TextField
             inputProps={{ type: "number" }}
             type="number"
@@ -83,7 +79,7 @@ function PayLoanDialog({
       <DialogActions>
         <Button onClick={onPayLoanDialogClose}>Cancel</Button>
         <Button
-          disabled={!(userId && loanId && payAmount)}
+          disabled={!(loanId && payAmount)}
           onClick={onSubmitClick}
           variant="contained"
           color="primary"

@@ -18,24 +18,33 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker/DatePicker";
 interface AddLoanDialogProps {
   isAddLoanDialogOpen: boolean;
   onAddLoanDialogClose: () => void;
+  refetch: () => void;
 }
 
 function AddLoanDialog({
   isAddLoanDialogOpen,
   onAddLoanDialogClose,
+  refetch,
 }: AddLoanDialogProps) {
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState<number | null>(null);
   const [reason, setReason] = useState("");
-  const [loanAmount, setLoanAmount] = useState(0);
-  const [balancePaid, setBalancePaid] = useState(0);
+  const [loanAmount, setLoanAmount] = useState<number | null>(null);
+  const [balancePaid, setBalancePaid] = useState<number | null>(null);
   const [dateCreated, setDateCreated] = useState<dayjs.Dayjs | null>(null);
 
   const onSubmitClick = () => {
-    onAddLoanDialogClose();
+    AddLoan({
+      user_id: userId!,
+      loan_reason: reason,
+      loan_amount: loanAmount!,
+      balance_paid: balancePaid!,
+      date_created: dateCreated!.format("ddd, DD MMM YYYY HH:mm:ss [GMT]"),
+    });
   };
   const addLoanMutation = useMutation<Loan, AxiosAPIError, AddLoanType>({
     mutationFn: (data) => addLoanAPI(data),
     onSuccess: () => {
+      refetch();
       onAddLoanDialogClose();
     },
     meta: {
@@ -59,10 +68,12 @@ function AddLoanDialog({
         <div className={styles.fields}>
           <TextField
             autoFocus
+            inputProps={{ type: "number" }}
+            type="number"
             fullWidth
             placeholder="User ID"
             value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            onChange={(e) => setUserId(parseInt(e.target.value))}
           />
           <DatePicker
             label="Date Created"

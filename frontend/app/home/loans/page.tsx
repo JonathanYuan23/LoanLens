@@ -55,7 +55,7 @@ const userLoans: LoansType = {
 };
 
 function Loans() {
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setUserId] = useState<number | null>(null);
 
   const [isPayLoanDialogOpen, setIsPayLoanDialogOpen] =
     useState<boolean>(false);
@@ -85,7 +85,7 @@ function Loans() {
     AxiosAPIError
   >({
     queryKey: ["userLoans", userId],
-    queryFn: () => getLoans(parseInt(userId)),
+    queryFn: () => getLoans(userId!),
     enabled: false,
   });
 
@@ -94,24 +94,33 @@ function Loans() {
       <div className={styles.topBar}>
         <div className={styles.search}>
           <TextField
+            autoFocus
+            inputProps={{ type: "number" }}
+            type="number"
             size="small"
             id="outlined-basic"
             label="User ID"
             value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            onChange={(e) => setUserId(parseInt(e.target.value))}
           />
           <Button variant="contained" color="primary" onClick={handleClick}>
             Fetch Loans
           </Button>
         </div>
         <div className={styles.options}>
-          <Button variant="contained" color="primary" onClick={handlePayClick}>
+          <Button
+            variant="contained"
+            disabled={!data}
+            color="primary"
+            onClick={handlePayClick}
+          >
             Pay Loan
           </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={handleAddLoanClick}
+            disabled={!data}
           >
             Add Loan
           </Button>
@@ -187,10 +196,12 @@ function Loans() {
       <PayLoanDialog
         isPayLoanDialogOpen={isPayLoanDialogOpen}
         onPayLoanDialogClose={onPayLoanDialogClose}
+        refetch={refetch}
       />
       <AddLoanDialog
         isAddLoanDialogOpen={isAddLoanDialogOpen}
         onAddLoanDialogClose={onAddLoanDialogClose}
+        refetch={refetch}
       />
       {/* 
       <Dialog
