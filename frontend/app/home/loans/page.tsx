@@ -203,61 +203,6 @@ function Loans() {
         onAddLoanDialogClose={onAddLoanDialogClose}
         refetch={refetch}
       />
-      {/* 
-      <Dialog
-        open={IsPayLoanDialogOpen}
-        onClose={onPayLoanDialogClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Pay Loan</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Pay an amount off of a User's Loan
-          </DialogContentText>
-          <div className={styles.fields}>
-            <TextField
-              autoFocus
-              fullWidth
-              placeholder="First Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </div>
-          <div className={styles.fields}>
-            <TextField
-              fullWidth
-              placeholder="City"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <DatePicker
-              label="Date of Birth"
-              value={dob}
-              onChange={(newDob) => setDob(newDob)}
-            />
-          </div>
-          <div className={styles.fields}>
-            <TextField
-              fullWidth
-              placeholder="Company Name"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              placeholder="Job Title"
-              value={jobTitle}
-              onChange={(e) => setJobTitle(e.target.value)}
-            />
-          </div>
-        </DialogContent>
-      </Dialog> */}
     </div>
   );
 }
