@@ -28,3 +28,6 @@ user_id, total_loan_amount, total_balance_paid
 user_id, name, address, dob, city_id, company_id, job_id, income
 1,Tyler Evans,850 Paul Squares,0000-00-00 00:00:00,21,5730,8,97626.00
 27141,Tyler Evans,168 Taylor Point Suite 890,1986-12-29 00:00:00,569,8337,20,51582.00
+
+salary, total_loans, total_assets, total_balance_paid
+5826.00, 323.00, 85004.00, 1.00
