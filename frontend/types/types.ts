@@ -74,3 +74,8 @@ export interface UserType {
 export interface Income {
   household_income: number;
 }
+
+export interface HouseholdMemberType {
+  user_id: number;
+  name: number;
+}

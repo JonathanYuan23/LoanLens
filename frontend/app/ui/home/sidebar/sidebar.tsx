@@ -12,15 +12,15 @@ interface menuItemsInterface {
 
 const menuItems: menuItemsInterface[] = [
   {
-    title: "Pages",
+    title: "LoanLens",
     list: [
-      {
-        title: "Home",
-        path: "/home",
-      },
       {
         title: "Users",
         path: "/home/users",
+      },
+      {
+        title: "Household",
+        path: "/home/household",
       },
       {
         title: "Assets",

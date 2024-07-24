@@ -69,5 +69,6 @@ def create_loan():
         response = "success."
         return response, 200
     except Exception as e:
+        print(e)
         response = "error."
         return response, 500
