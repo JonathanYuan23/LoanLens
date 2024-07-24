@@ -152,3 +152,6 @@ FROM Loans
 WHERE user_id = 14
 GROUP BY user_id;
 
+-------------------------------------------------------------
+-- searchName.sql
+SELECT * FROM Users WHERE name = 'Tyler Evans' 

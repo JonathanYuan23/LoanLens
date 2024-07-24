@@ -8,19 +8,23 @@ asset_id, asset_type, worth
 name, total_assets
 Michael Patel, 1222288.00
 
-user_id
-6
-1
-10
-2
-3
-4
-5
-7
-9
+user_id, name
+4,Kyle Baxter Jr.
+1,Tyler Evans
+2,Whitney Cook
+3,Bradley Davis
+5,Shawn Robertson
+6,Taylor Davis
+10,Tonya Cannon
+7,Ralph Jones
+9,Anna Harris
 
 total_household_income
 324292.00
 
 user_id, total_loan_amount, total_balance_paid
 14, 152405.00, 50211.00
+
+user_id, name, address, dob, city_id, company_id, job_id, income
+1,Tyler Evans,850 Paul Squares,0000-00-00 00:00:00,21,5730,8,97626.00
+27141,Tyler Evans,168 Taylor Point Suite 890,1986-12-29 00:00:00,569,8337,20,51582.00
