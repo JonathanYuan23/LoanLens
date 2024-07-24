@@ -25,9 +25,16 @@ total_household_income
 user_id, total_loan_amount, total_balance_paid
 14, 152405.00, 50211.00
 
-user_id, name, address, dob, city_id, company_id, job_id, income
-1,Tyler Evans,850 Paul Squares,0000-00-00 00:00:00,21,5730,8,97626.00
-27141,Tyler Evans,168 Taylor Point Suite 890,1986-12-29 00:00:00,569,8337,20,51582.00
+user_id, name, address, dob, city_name, company_name, job_title, income
+375, Tyler Brown, 052 Karen Mill, 1975-03-30 00:00:00, Frisco, Peck, Wilkerson and Davis, Petroleum_Engineer, 50712.00
+3642, Tyler Brown, 741 Salinas Oval Apt. 300, 1976-10-15 00:00:00, Peoria, Torres PLC, Fashion_Designer, 55701.00
+20420, Tyler Barnes, 6312 Joshua Square Suite 341, 1977-12-08 00:00:00, Fredericksburg, Hall and Sons, Comedian, 92839.00
+20523, Tyler Brown, 3496 Taylor Corners, 0000-00-00 00:00:00, Greenville, Parker-Wood, Geologist, 46861.00
+21531, Tyler Braun, 539 Amy Stream Suite 641, 0000-00-00 00:00:00, Florence-Graham, Mendoza and Sons, Chartered_Accountant, 33396.00
+24528, Tyler Barton, 1955 Harrison Haven Apt. 057, 2002-05-01 00:00:00, Farmington Hills, Williams Group, Technology_specialist, 101249.00
+30140, Tyler Banks, 999 Morton Ramp Apt. 227, 2002-02-23 00:00:00, New Orleans, Schroeder, Lin and Smith, Economist, 93574.00
+43524, Tyler Bailey, 07359 Joe Light, 1988-10-25 00:00:00, Fairfield, Grant-Moody, Architect, 33678.00
+44077, Tyler Black, 828 Autumn Parks, 0000-00-00 00:00:00, Johns Creek, Lucas PLC, Chef, 101910.00
 
 salary, total_loans, total_assets, total_balance_paid
 5826.00, 323.00, 85004.00, 1.00
