@@ -21,11 +21,13 @@ import { addUserAPI } from "app/api/api";
 interface AddUserDialogProps {
   isAddUserDialogOpen: boolean;
   onAddUserDialogClose: () => void;
+  refetch: () => void;
 }
 
 function AddUserDialog({
   isAddUserDialogOpen,
   onAddUserDialogClose,
+  refetch,
 }: AddUserDialogProps) {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -50,6 +52,7 @@ function AddUserDialog({
   const addUserMutation = useMutation<User, AxiosAPIError, AddUserType>({
     mutationFn: (data) => addUserAPI(data),
     onSuccess: () => {
+      refetch();
       onAddUserDialogClose();
     },
     meta: {

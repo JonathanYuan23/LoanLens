@@ -171,6 +171,7 @@ const UsersPage = () => {
       <AddUserDialog
         isAddUserDialogOpen={isAddUserDialogOpen}
         onAddUserDialogClose={onAddUserDialogClose}
+        refetch={refetch}
       />
     </div>
   );
