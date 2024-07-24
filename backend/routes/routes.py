@@ -79,10 +79,10 @@ def search_user_by_name(name):
     return jsonify(users)
 
 @api_bp.route('/loan-approval', methods=['POST'])
-def loan_approval(name):
+def loan_approval():
     data = request.json
     user_id = data.get('user_id')
     loan_amount = data.get('loan_amount')
     # temp return
-    return 0.37, 200
+    return "0.37", 200
 
