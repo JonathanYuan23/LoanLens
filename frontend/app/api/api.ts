@@ -38,3 +38,8 @@ export const getUserAPI = async (data: string) => {
   const res = await api.get(`/search-user/${data}`);
   return res.data;
 };
+
+export const getHouseholdAPI = async (data: number) => {
+  const res = await api.get(`/get-user-household-member/${data}`);
+  return res.data;
+};

@@ -1,0 +1,16 @@
+.container {
+  display: block;
+  padding: 20px;
+}
+
+.search {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 50px;
+}
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
