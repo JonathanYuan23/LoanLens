@@ -12,6 +12,7 @@ import {
   TableRow,
   TextField,
   Typography,
+  Pagination,
 } from "@mui/material";
 import AddUserDialog from "./addUser";
 import styles from "./users.module.scss";
@@ -53,6 +54,8 @@ const sampledata: UserType[] = [
 ];
 
 const UsersPage = () => {
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [name, setName] = useState("");
   const [isAddUserDialogOpen, setIsAddUserDialogOpen] =
     useState<boolean>(false);
@@ -77,6 +80,16 @@ const UsersPage = () => {
     queryFn: () => getUserAPI(name!),
     enabled: false,
   });
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
+
+  const paginatedData = data
+    ? data.slice((page - 1) * rowsPerPage, page * rowsPerPage)
+    : [];
 
   return (
     <div className={styles.container}>
@@ -110,7 +123,7 @@ const UsersPage = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>User Id</TableCell>
+                <TableCell>ID</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>DOB</TableCell>
                 <TableCell>Address</TableCell>
@@ -131,8 +144,8 @@ const UsersPage = () => {
                   <TableCell colSpan={4}>{error.message}</TableCell>
                 </TableRow>
               )}
-              {sampledata &&
-                sampledata.map((user, index) => (
+              {paginatedData &&
+                paginatedData.map((user, index) => (
                   <TableRow key={index}>
                     <TableCell>{user.user_id}</TableCell>
                     <TableCell>{user.name}</TableCell>
@@ -147,11 +160,18 @@ const UsersPage = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Pagination
+          count={Math.ceil((data?.length || 0) / rowsPerPage)}
+          page={page}
+          onChange={handlePageChange}
+          className={styles.pagination}
+        />
       </div>
 
       <AddUserDialog
         isAddUserDialogOpen={isAddUserDialogOpen}
         onAddUserDialogClose={onAddUserDialogClose}
+        refetch={refetch}
       />
     </div>
   );

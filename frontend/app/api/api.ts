@@ -1,4 +1,9 @@
-import { AddLoanType, AddUserType, PayLoanType } from "types/types";
+import {
+  AddLoanType,
+  AddUserType,
+  LoanApprovalType,
+  PayLoanType,
+} from "types/types";
 import axios from "axios";
 
 const api = axios.create({
@@ -35,11 +40,16 @@ export const addUserAPI = async (data: AddUserType) => {
 };
 
 export const getUserAPI = async (data: string) => {
-  const res = await api.get(`/search-user/${data}`);
+  const res = await api.get(`/search/${data}`);
   return res.data;
 };
 
 export const getHouseholdAPI = async (data: number) => {
   const res = await api.get(`/get-user-household-member/${data}`);
+  return res.data;
+};
+
+export const getApprovalRatingAPI = async (data: LoanApprovalType) => {
+  const res = await api.post(`/loan-approval/`, data);
   return res.data;
 };
