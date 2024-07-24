@@ -77,5 +77,10 @@ export interface Income {
 
 export interface HouseholdMemberType {
   user_id: number;
-  name: number;
+  name: string;
+}
+
+export interface LoanApprovalType {
+  user_id: number;
+  loan_amount: number;
 }

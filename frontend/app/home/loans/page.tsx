@@ -19,6 +19,7 @@ import { getLoans } from "app/api/api";
 import { AxiosAPIError, LoansType } from "types/types";
 import { useQuery } from "@tanstack/react-query";
 import AddLoanDialog from "./addLoan";
+import ApprovalDialog from "./approval";
 
 // test data
 const userLoans: LoansType = {
@@ -62,12 +63,16 @@ function Loans() {
     useState<boolean>(false);
   const [isAddLoanDialogOpen, setIsAddLoanDialogOpen] =
     useState<boolean>(false);
+  const [isApprovalDialogOpen, setIsApprovalDialogOpen] = useState(false);
 
   const onPayLoanDialogClose = () => {
     setIsPayLoanDialogOpen(false);
   };
   const onAddLoanDialogClose = () => {
     setIsAddLoanDialogOpen(false);
+  };
+  const onApprovalDialogClose = () => {
+    setIsApprovalDialogOpen(false);
   };
 
   const handleClick = () => {
@@ -79,6 +84,9 @@ function Loans() {
   };
   const handleAddLoanClick = () => {
     setIsAddLoanDialogOpen(true);
+  };
+  const handleApprovalClick = () => {
+    setIsApprovalDialogOpen(true);
   };
 
   const { isError, data, error, refetch, isLoading } = useQuery<
@@ -109,6 +117,14 @@ function Loans() {
           </Button>
         </div>
         <div className={styles.options}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleApprovalClick}
+            disabled={!data}
+          >
+            Approval
+          </Button>
           <Button
             variant="contained"
             disabled={!data}
@@ -195,6 +211,10 @@ function Loans() {
         </TableContainer>
       </div>
 
+      <ApprovalDialog
+        isApprovalDialogOpen={isApprovalDialogOpen}
+        onApprovalDialogClose={onApprovalDialogClose}
+      />
       <PayLoanDialog
         isPayLoanDialogOpen={isPayLoanDialogOpen}
         onPayLoanDialogClose={onPayLoanDialogClose}

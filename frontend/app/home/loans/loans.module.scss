@@ -32,3 +32,25 @@
   display: flex;
   gap: 20px;
 }
+
+.approval {
+  display: flex;
+  justify-content: center;
+}
+
+.rating {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.low_rating {
+  color: red;
+}
+
+.mid_rating {
+  color: orange;
+}
+
+.high_rating {
+  color: green;
+}

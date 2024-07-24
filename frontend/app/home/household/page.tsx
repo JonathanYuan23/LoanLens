@@ -68,7 +68,7 @@ function Household() {
           onChange={(e) => setUserId(e.target.value)}
         />
         <Button variant="contained" color="primary" onClick={handleClick}>
-          Fetch Assets
+          Fetch
         </Button>
       </div>
 
