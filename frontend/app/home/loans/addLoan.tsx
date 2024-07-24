@@ -7,6 +7,7 @@ import {
   TextField,
   DialogActions,
   Button,
+  Typography,
 } from "@mui/material";
 import styles from "./loans.module.scss";
 import { AxiosAPIError, Loan, AddLoanType } from "types/types";
@@ -18,24 +19,33 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker/DatePicker";
 interface AddLoanDialogProps {
   isAddLoanDialogOpen: boolean;
   onAddLoanDialogClose: () => void;
+  refetch: () => void;
 }
 
 function AddLoanDialog({
   isAddLoanDialogOpen,
   onAddLoanDialogClose,
+  refetch,
 }: AddLoanDialogProps) {
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState<number | null>(null);
   const [reason, setReason] = useState("");
-  const [loanAmount, setLoanAmount] = useState(0);
-  const [balancePaid, setBalancePaid] = useState(0);
+  const [loanAmount, setLoanAmount] = useState<number | null>(null);
+  const [balancePaid, setBalancePaid] = useState<number | null>(null);
   const [dateCreated, setDateCreated] = useState<dayjs.Dayjs | null>(null);
 
   const onSubmitClick = () => {
-    onAddLoanDialogClose();
+    AddLoan({
+      user_id: userId!,
+      loan_reason: reason,
+      loan_amount: loanAmount!,
+      balance_paid: balancePaid!,
+      date_created: dateCreated!.format("YYYY-MM-DD"),
+    });
   };
   const addLoanMutation = useMutation<Loan, AxiosAPIError, AddLoanType>({
     mutationFn: (data) => addLoanAPI(data),
     onSuccess: () => {
+      refetch();
       onAddLoanDialogClose();
     },
     meta: {
@@ -59,10 +69,12 @@ function AddLoanDialog({
         <div className={styles.fields}>
           <TextField
             autoFocus
+            inputProps={{ type: "number" }}
+            type="number"
             fullWidth
             placeholder="User ID"
             value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            onChange={(e) => setUserId(parseInt(e.target.value))}
           />
           <DatePicker
             label="Date Created"
@@ -83,6 +95,7 @@ function AddLoanDialog({
             inputProps={{ type: "number" }}
             type="number"
             fullWidth
+            error={loanAmount !== null && loanAmount <= 0}
             placeholder="Loan Amount"
             value={loanAmount}
             onChange={(e) => setLoanAmount(parseInt(e.target.value))}
@@ -96,12 +109,28 @@ function AddLoanDialog({
             onChange={(e) => setBalancePaid(parseInt(e.target.value))}
           />
         </div>
+        <div>
+          {loanAmount !== null &&
+            balancePaid !== null &&
+            loanAmount < balancePaid && (
+              <Typography color="red">
+                Balance Paid can't be greater than loan amount.
+              </Typography>
+            )}
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={onAddLoanDialogClose}>Cancel</Button>
         <Button
           disabled={
-            !(userId && loanAmount && reason && dateCreated && balancePaid)
+            !(
+              userId &&
+              loanAmount &&
+              reason &&
+              dateCreated &&
+              balancePaid &&
+              loanAmount >= balancePaid
+            )
           }
           onClick={onSubmitClick}
           variant="contained"

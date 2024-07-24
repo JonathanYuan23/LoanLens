@@ -10,6 +10,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Typography,
 } from "@mui/material";
 import PayLoanDialog from "./payLoan";
 
@@ -24,28 +25,28 @@ const userLoans: LoansType = {
   total_loan_amount: 22929292,
   loans: [
     {
-      id: 1,
+      loan_id: 1,
       reason: "Mortgage",
       loan_amount: 10000000,
       balance_paid: 600000,
       date_created: "March 2023",
     },
     {
-      id: 2,
+      loan_id: 2,
       reason: "Mortgage",
       loan_amount: 10000000,
       balance_paid: 600000,
       date_created: "March 2023",
     },
     {
-      id: 3,
+      loan_id: 3,
       reason: "Mortgage",
       loan_amount: 10000000,
       balance_paid: 600000,
       date_created: "March 2023",
     },
     {
-      id: 4,
+      loan_id: 4,
       reason: "Mortgage",
       loan_amount: 10000000,
       balance_paid: 600000,
@@ -55,7 +56,7 @@ const userLoans: LoansType = {
 };
 
 function Loans() {
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setUserId] = useState<number | null>(null);
 
   const [isPayLoanDialogOpen, setIsPayLoanDialogOpen] =
     useState<boolean>(false);
@@ -85,7 +86,7 @@ function Loans() {
     AxiosAPIError
   >({
     queryKey: ["userLoans", userId],
-    queryFn: () => getLoans(parseInt(userId)),
+    queryFn: () => getLoans(userId!),
     enabled: false,
   });
 
@@ -94,32 +95,42 @@ function Loans() {
       <div className={styles.topBar}>
         <div className={styles.search}>
           <TextField
+            autoFocus
+            inputProps={{ type: "number" }}
+            type="number"
             size="small"
             id="outlined-basic"
             label="User ID"
             value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            onChange={(e) => setUserId(parseInt(e.target.value))}
           />
           <Button variant="contained" color="primary" onClick={handleClick}>
             Fetch Loans
           </Button>
         </div>
         <div className={styles.options}>
-          <Button variant="contained" color="primary" onClick={handlePayClick}>
+          <Button
+            variant="contained"
+            disabled={!data}
+            color="primary"
+            onClick={handlePayClick}
+          >
             Pay Loan
           </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={handleAddLoanClick}
+            disabled={!data}
           >
             Add Loan
           </Button>
         </div>
       </div>
       <div className={styles.tableContainer}>
+        <Typography fontSize="16pt"> Loan Summary</Typography>
+
         <TableContainer component={Paper}>
-          Loan Summary
           <Table>
             <TableHead>
               <TableRow>
@@ -145,9 +156,9 @@ function Loans() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Typography fontSize="16pt"> Loans Breakdown</Typography>
 
         <TableContainer component={Paper}>
-          Loan Breakdown
           <Table>
             <TableHead>
               <TableRow>
@@ -172,7 +183,7 @@ function Loans() {
               {data &&
                 data.loans.map((loan, index) => (
                   <TableRow key={index}>
-                    <TableCell>{loan.id}</TableCell>
+                    <TableCell>{loan.loan_id}</TableCell>
                     <TableCell>{loan.reason}</TableCell>
                     <TableCell>{loan.loan_amount}</TableCell>
                     <TableCell>{loan.balance_paid}</TableCell>
@@ -187,66 +198,13 @@ function Loans() {
       <PayLoanDialog
         isPayLoanDialogOpen={isPayLoanDialogOpen}
         onPayLoanDialogClose={onPayLoanDialogClose}
+        refetch={refetch}
       />
       <AddLoanDialog
         isAddLoanDialogOpen={isAddLoanDialogOpen}
         onAddLoanDialogClose={onAddLoanDialogClose}
+        refetch={refetch}
       />
-      {/* 
-      <Dialog
-        open={IsPayLoanDialogOpen}
-        onClose={onPayLoanDialogClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Pay Loan</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Pay an amount off of a User's Loan
-          </DialogContentText>
-          <div className={styles.fields}>
-            <TextField
-              autoFocus
-              fullWidth
-              placeholder="First Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </div>
-          <div className={styles.fields}>
-            <TextField
-              fullWidth
-              placeholder="City"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <DatePicker
-              label="Date of Birth"
-              value={dob}
-              onChange={(newDob) => setDob(newDob)}
-            />
-          </div>
-          <div className={styles.fields}>
-            <TextField
-              fullWidth
-              placeholder="Company Name"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              placeholder="Job Title"
-              value={jobTitle}
-              onChange={(e) => setJobTitle(e.target.value)}
-            />
-          </div>
-        </DialogContent>
-      </Dialog> */}
     </div>
   );
 }
