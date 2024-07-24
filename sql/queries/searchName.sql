@@ -1,1 +1,1 @@
-SELECT * FROM Users WHERE name = '<name>'
+SELECT * FROM Users WHERE name LIKE %<name>%

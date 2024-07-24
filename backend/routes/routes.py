@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from queries.queries import get_all_assets, get_loan_history, get_household_income,pay_loan, new_loan, get_user_household_member, register_user
+from queries.queries import get_all_assets, get_loan_history, get_household_income,pay_loan, new_loan, get_user_household_member, register_user, search_by_name
 
 api_bp = Blueprint('api', __name__)
 
@@ -72,3 +72,17 @@ def create_loan():
         print(e)
         response = "error."
         return response, 500
+
+@api_bp.route('/search/<string:name>', methods=['GET'])
+def search_user_by_name(name):
+    users = search_by_name(name)
+    return jsonify(users)
+
+@api_bp.route('/loan-approval', methods=['POST'])
+def loan_approval(name):
+    data = request.json
+    user_id = data.get('user_id')
+    loan_amount = data.get('loan_amount')
+    # temp return
+    return 0.37, 200
+

@@ -42,6 +42,15 @@ def get_loan_history(user_id):
         total += loan['loan_amount']
     return {'user_id': user_id, 'total_loan_amount': total, 'loans': loans}
 
+def search_by_name(name):
+    sql_query = text("""
+        SELECT * FROM Users WHERE name LIKE :name;
+    """)
+    result = db.session.execute(sql_query, {'name': f'%{name}%'})
+    print(row[0] for row in result)
+    results = [dict(row) for row in result.mappings()]
+    return results
+
 def get_household_income(user_id):
     try:
         sql_query = text("""
@@ -187,14 +196,14 @@ def get_user_household_member(user_id):
                 JOIN 
                     HouseholdMembers hm ON m.spouse_id_2 = hm.user_id
             )
-
-            SELECT DISTINCT user_id
-            FROM HouseholdMembers;
+            SELECT DISTINCT hm.user_id, u.name
+            FROM HouseholdMembers hm
+            JOIN Users u ON hm.user_id = u.user_id;
         """)
     result = db.session.execute(sql_query, {'user_id': user_id})
         
     # Convert results to a list of user_ids
-    household_members_list = [row[0] for row in result]
+    household_members_list = [{'user_id':row[0], 'name':row[1]} for row in result]
     return household_members_list
 
 def register_user(name, address, dob, city_name, company_name, job_title, income):
