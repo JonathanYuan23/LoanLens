@@ -40,7 +40,7 @@ export const addUserAPI = async (data: AddUserType) => {
 };
 
 export const getUserAPI = async (data: string) => {
-  const res = await api.get(`/search-user/${data}`);
+  const res = await api.get(`/search/${data}`);
   return res.data;
 };
 
