@@ -50,6 +50,6 @@ export const getHouseholdAPI = async (data: number) => {
 };
 
 export const getApprovalRatingAPI = async (data: LoanApprovalType) => {
-  const res = await api.post(`/loan-approval/`, data);
+  const res = await api.post(`/loan-approval`, data);
   return res.data;
 };

@@ -22,7 +22,7 @@ interface ApprovalDialogProps {
   onApprovalDialogClose: () => void;
 }
 
-const test = 0.7;
+const test = 0.3;
 
 function ApprovalDialog({
   isApprovalDialogOpen,
@@ -54,9 +54,7 @@ function ApprovalDialog({
     >
       <DialogTitle id="form-dialog-title">Loan Approval Rating</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Check Likelihood for Loan Approval
-        </DialogContentText>
+        <DialogContentText>Loan Computation Analysis</DialogContentText>
         <div className={styles.fields}>
           <TextField
             autoFocus
