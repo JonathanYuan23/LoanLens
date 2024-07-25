@@ -1,5 +1,6 @@
 from db import db
 from sqlalchemy.sql import text
+from decimal import Decimal
 
 def get_all_assets(user_id):
     sql_query = text("""
@@ -260,3 +261,41 @@ def register_user(name, address, dob, city_name, company_name, job_title, income
             'income': income
         })
     db.session.commit()
+
+def calculate_loan_approval(user_id, loan_amount_requested):
+    sql_query = text("""
+            SELECT 
+        U.income AS salary,
+        COALESCE(SUM(L.loan_amount), 0) AS total_loans,
+        COALESCE(SUM(A.worth), 0) AS total_assets,
+        COALESCE(SUM(L.balance_paid), 0) AS total_balance_paid
+        FROM 
+            Users U
+        LEFT JOIN 
+            Loans L ON U.user_id = L.user_id
+        LEFT JOIN 
+            AssetToOwner AO ON U.user_id = AO.user_id
+        LEFT JOIN 
+            Assets A ON AO.asset_id = A.asset_id
+        WHERE 
+            U.user_id = :user_id
+        GROUP BY 
+            U.user_id, U.income;
+    """)
+    result = db.session.execute(sql_query, {'user_id': int(user_id)})
+    row = [{'salary': row[0], 'total_loans': row[1], 'total_assets': row[2], 'total_balanced_paid': row[3]} for row in result][0]
+    # Uses debt to income ratio
+    max_dti=0.36
+    salary = row['salary']
+    total_loans = row['total_loans']
+    total_assets = row['total_assets']
+    total_balanced_paid = row['total_balanced_paid']
+    
+    new_total_loan = total_loans + total_balanced_paid + loan_amount_requested
+    new_dti = new_total_loan / salary
+    
+    # Calculate approval probability based on loan amount
+    loan_request_factor = Decimal(loan_amount_requested) / Decimal(salary) / 8
+    approval_probability = max(0, (1 - loan_request_factor) * 100)
+    
+    return approval_probability
