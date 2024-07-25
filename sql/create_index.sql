@@ -1,6 +1,3 @@
--- searchName.sql
-CREATE INDEX idx_name ON Users(name);
-
 -- userInfo.sql
 -- Index on Users table (primary key is already indexed)
 CREATE INDEX idx_users_user_id ON Users(user_id);
