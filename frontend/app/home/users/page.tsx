@@ -152,8 +152,8 @@ const UsersPage = () => {
                     <TableCell>{user.dob}</TableCell>
                     <TableCell>{user.address}</TableCell>
                     <TableCell>{user.city_name}</TableCell>
-                    <TableCell>{user.company_name}</TableCell>
                     <TableCell>{user.job_title}</TableCell>
+                    <TableCell>{user.company_name}</TableCell>
                     <TableCell>{user.income}</TableCell>
                   </TableRow>
                 ))}
