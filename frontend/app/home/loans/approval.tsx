@@ -86,7 +86,7 @@ function ApprovalDialog({
                 [styles.high_rating]: data >= 0.7,
               })}
             >
-              {data * 100}%
+              {data.toFixed(2)}%
             </Typography>
           )}
         </div>
