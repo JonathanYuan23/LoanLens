@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from queries.queries import get_all_assets, get_loan_history, get_household_income,pay_loan, new_loan, get_user_household_member, register_user, search_by_name
+from queries.queries import get_all_assets, get_loan_history, get_household_income,pay_loan, new_loan, get_user_household_member, register_user, search_by_name, calculate_loan_approval
 
 api_bp = Blueprint('api', __name__)
 
@@ -83,6 +83,5 @@ def loan_approval():
     data = request.json
     user_id = data.get('user_id')
     loan_amount = data.get('loan_amount')
-    # temp return
-    return "0.37", 200
+    return str(calculate_loan_approval(user_id, loan_amount)), 200
 
