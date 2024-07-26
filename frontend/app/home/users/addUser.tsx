@@ -70,7 +70,7 @@ function AddUserDialog({
       onClose={onAddUserDialogClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Pay Loan</DialogTitle>
+      <DialogTitle id="form-dialog-title">Add User</DialogTitle>
       <DialogContent>
         <DialogContentText>Add a User to the Database </DialogContentText>
         <div className={styles.fields}>
